@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Stadium Operating System</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fa-solid fa-microchip logo-icon"></i>
+                <h2>StadiumOS</h2>
+            </div>
+            <button class="toggle-btn" id="sidebarCloseBtn">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="nav-links">
+            <li class="active">
+                <a href="#" data-view="dashboard">
+                    <i class="fa-solid fa-border-all"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="dashboard">
+                    <i class="fa-solid fa-tower-broadcast"></i>
+                    <span>Live Stadium</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="crowd">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <span>Crowd Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="dashboard">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>AI Predictions</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="security">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Security</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="parking">
+                    <i class="fa-solid fa-car"></i>
+                    <span>Parking</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="weather">
+                    <i class="fa-solid fa-cloud-sun-rain"></i>
+                    <span>Weather</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" data-view="tickets">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Tickets & Booking</span>
+                </a>
+            </li>
+            <li class="nav-divider"></li>
+            <li>
+                <a href="#" data-view="settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        
+        <!-- Top Navbar -->
+        <header class="topbar premium-header">
+            <!-- Left Side -->
+            <div class="topbar-left">
+                <button class="menu-btn" id="sidebarOpenBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="header-branding">
+                    <h3>🏟 StadiumOS AI</h3>
+                    <p>Smart Stadium Control Center</p>
+                </div>
+                <div class="online-indicator">
+                    <span class="pulse-dot"></span> Online
+                </div>
+            </div>
+            
+            <!-- Center Side -->
+            <div class="topbar-center">
+                <div class="premium-search">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search cameras, gates, parking, reports...">
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="topbar-right">
+                
+                <div class="quick-actions">
+                    <button class="icon-btn" title="Export Report"><i class="fa-solid fa-file-export"></i></button>
+                    <button class="icon-btn" title="Refresh Dashboard"><i class="fa-solid fa-rotate-right"></i></button>
+                    <button class="icon-btn" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+                    <button class="icon-btn" title="Settings"><i class="fa-solid fa-gear"></i></button>
+                </div>
+
+                <button class="btn-ai pulse-glow">
+                    🤖 Ask AI
+                </button>
+
+                <div class="notification-wrapper">
+                    <button class="icon-btn notification-btn shake-on-new" id="notificationBtn">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge" id="notifBadge">5</span>
+                    </button>
+                    <!-- Notification Popup -->
+                    <div class="notification-popup glass-card hidden" id="notificationPopup">
+                        <h4>Recent Alerts</h4>
+                        <ul id="notificationList">
+                            <li><i class="fa-solid fa-triangle-exclamation text-warning"></i> Gate 12 Crowd High</li>
+                            <li><i class="fa-solid fa-square-parking text-warning"></i> Parking A Full</li>
+                            <li><i class="fa-solid fa-video-slash text-danger"></i> Camera 04 Offline</li>
+                            <li><i class="fa-solid fa-cloud text-info"></i> Weather Updated</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="datetime-digital">
+                    <div class="date-part">
+                        <span id="currentDay">THURSDAY</span>
+                        <span id="currentDateFull">09 JUL 2026</span>
+                    </div>
+                    <span id="liveTimeDigital" class="digital-clock neon-text">19:42:15</span>
+                </div>
+
+                <div class="profile-wrapper">
+                    <div class="profile" id="profileBtn">
+                        <div class="avatar-container">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=00E5FF&color=fff" alt="Profile">
+                            <span class="online-badge"></span>
+                        </div>
+                        <div class="profile-info">
+                            <span class="profile-name">Admin</span>
+                            <span class="profile-role">System Administrator</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                    </div>
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown glass-card hidden" id="profileDropdown">
+                        <ul>
+                            <li><a href="#"><i class="fa-solid fa-user"></i> Profile</a></li>
+                            <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li class="nav-divider"></li>
+                            <li><a href="#" class="text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="view-dashboard" class="dashboard-container view-section active">
+            
+            <!-- Hero Section -->
+            <section class="hero-section glass-card slide-up">
+                <div class="hero-content">
+                    <h1 class="typing-effect">AI STADIUM OPERATING SYSTEM</h1>
+                    <p>Real-time autonomous stadium management & intelligence</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary ripple-btn">
+                            <i class="fa-solid fa-chart-line"></i> View Analytics
+                        </button>
+                        <button class="btn btn-secondary ripple-btn">
+                            <i class="fa-solid fa-file-export"></i> Generate Report
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="ai-core-animation">
+                        <div class="core-ring outer-ring"></div>
+                        <div class="core-ring middle-ring"></div>
+                        <div class="core-ring inner-ring"></div>
+                        <div class="core-center"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card glass-card fade-in delay-1">
+                    <div class="kpi-icon text-primary"><i class="fa-solid fa-users"></i></div>
+                    <div class="kpi-info">
+                        <h3>Total Visitors</h3>
+                        <div class="kpi-value counter" data-target="84250">0</div>
+                        <p class="kpi-desc text-success"><i class="fa-solid fa-arrow-trend-up"></i> +4.5% vs last event</p>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass-card fade-in delay-2">
+                    <div class="kpi-icon text-secondary"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div class="kpi-info">
+                        <h3>Occupancy</h3>
+                        <div class="kpi-value"><span class="counter" data-target="92">0</span>%</div>
+                        <p class="kpi-desc text-success"><i class="fa-solid fa-check"></i> Optimal range</p>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass-card fade-in delay-3">
+                    <div class="kpi-icon text-success"><i class="fa-solid fa-sack-dollar"></i></div>
+                    <div class="kpi-info">
+                        <h3>Revenue</h3>
+                        <div class="kpi-value">$<span class="counter" data-target="1245000">0</span></div>
+                        <p class="kpi-desc text-success"><i class="fa-solid fa-arrow-trend-up"></i> +12% vs projection</p>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass-card fade-in delay-4">
+                    <div class="kpi-icon text-danger"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="kpi-info">
+                        <h3>Security Alerts</h3>
+                        <div class="kpi-value counter text-danger" id="kpiAlerts" data-target="3">0</div>
+                        <p class="kpi-desc text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Requires attention</p>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass-card fade-in delay-5">
+                    <div class="kpi-icon text-warning"><i class="fa-solid fa-square-parking"></i></div>
+                    <div class="kpi-info">
+                        <h3>Parking Available</h3>
+                        <div class="kpi-value counter text-warning" id="kpiParking" data-target="128">0</div>
+                        <p class="kpi-desc text-warning"><i class="fa-solid fa-circle-exclamation"></i> Nearing capacity</p>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass-card fade-in delay-6">
+                    <div class="kpi-icon text-primary"><i class="fa-solid fa-burger"></i></div>
+                    <div class="kpi-info">
+                        <h3>Food Orders</h3>
+                        <div class="kpi-value counter" data-target="15420">0</div>
+                        <p class="kpi-desc text-success"><i class="fa-solid fa-bolt"></i> Peak volume handled</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Dashboard Grid -->
+            <div class="main-grid">
+                
+                <!-- Left Column -->
+                <div class="grid-left">
+                    
+                    <!-- Interactive Stadium Digital Twin -->
+                    <section class="live-stadium-panel glass-card slide-up">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-vr-cardboard neon-text"></i> Stadium Digital Twin</h2>
+                            <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                        </div>
+
+                        <div class="digital-twin-container">
+                            <!-- SVG Stadium Map -->
+                            <div class="twin-map" id="twinMap">
+                                <!-- North Stand -->
+                                <div class="twin-zone zone-north" data-zone="North Stand" data-occ="82%" data-risk="Low" data-action="All gates open">
+                                    <span class="zone-label">North<br>Stand</span>
+                                    <div class="zone-tooltip">
+                                        <strong>North Stand</strong>
+                                        <div>Occupancy: 82%</div>
+                                        <div>Risk: <span class="text-success">Low</span></div>
+                                        <div>Action: All gates open</div>
+                                    </div>
+                                </div>
+                                <!-- South Stand -->
+                                <div class="twin-zone zone-south" data-zone="South Stand" data-occ="91%" data-risk="Medium" data-action="Open Gate 8">
+                                    <span class="zone-label">South<br>Stand</span>
+                                    <div class="zone-tooltip">
+                                        <strong>South Stand</strong>
+                                        <div>Occupancy: 91%</div>
+                                        <div>Risk: <span class="text-warning">Medium</span></div>
+                                        <div>Action: Open Gate 8</div>
+                                    </div>
+                                </div>
+                                <!-- East Stand -->
+                                <div class="twin-zone zone-east" data-zone="East Stand" data-occ="87%" data-risk="Medium" data-action="Open Gate 12">
+                                    <span class="zone-label">East<br>Stand</span>
+                                    <div class="zone-tooltip">
+                                        <strong>East Stand (Sector B)</strong>
+                                        <div>Occupancy: 87%</div>
+                                        <div>Risk: <span class="text-warning">Medium</span></div>
+                                        <div>Action: Open Gate 12</div>
+                                    </div>
+                                </div>
+                                <!-- West Stand -->
+                                <div class="twin-zone zone-west" data-zone="West Stand" data-occ="74%" data-risk="Low" data-action="Normal ops">
+                                    <span class="zone-label">West<br>Stand</span>
+                                    <div class="zone-tooltip">
+                                        <strong>West Stand</strong>
+                                        <div>Occupancy: 74%</div>
+                                        <div>Risk: <span class="text-success">Low</span></div>
+                                        <div>Action: Normal ops</div>
+                                    </div>
+                                </div>
+                                <!-- VIP -->
+                                <div class="twin-zone zone-vip" data-zone="VIP" data-occ="100%" data-risk="None" data-action="Reserved">
+                                    <span class="zone-label">VIP</span>
+                                    <div class="zone-tooltip">
+                                        <strong>VIP Zone</strong>
+                                        <div>Occupancy: 100%</div>
+                                        <div>Risk: <span class="text-primary">None</span></div>
+                                        <div>Action: Reserved & Secured</div>
+                                    </div>
+                                </div>
+                                <!-- Pitch -->
+                                <div class="twin-pitch">
+                                    <div class="twin-pitch-inner"></div>
+                                    <!-- Moving crowd dots -->
+                                    <div class="crowd-dots" id="crowdDots"></div>
+                                    <!-- Drone icon -->
+                                    <div class="drone-icon anim-float">🛸</div>
+                                </div>
+                                <!-- Food Court -->
+                                <div class="twin-zone zone-food" data-zone="Food Court" data-occ="68%" data-risk="Low" data-action="Normal">
+                                    <span class="zone-label">🍔 Food</span>
+                                    <div class="zone-tooltip">
+                                        <strong>Food Court</strong>
+                                        <div>Occupancy: 68%</div>
+                                        <div>Risk: <span class="text-success">Low</span></div>
+                                    </div>
+                                </div>
+                                <!-- Parking -->
+                                <div class="twin-zone zone-parking" data-zone="Parking" data-occ="93%" data-risk="High" data-action="Redirect to Zone C">
+                                    <span class="zone-label">🅿 Parking</span>
+                                    <div class="zone-tooltip">
+                                        <strong>Main Parking</strong>
+                                        <div>Occupancy: 93%</div>
+                                        <div>Risk: <span class="text-danger">High</span></div>
+                                        <div>Action: Redirect to Zone C</div>
+                                    </div>
+                                </div>
+                                <!-- Entry/Exit Gate indicators -->
+                                <div class="twin-gate gate-entry blink-green" title="Entry Gate Open">▲</div>
+                                <div class="twin-gate gate-exit blink-warn" title="Exit Gate">▼</div>
+                                <div class="twin-gate gate-emerg blink-danger" title="Emergency Exit">⚠</div>
+                                <!-- Camera icons -->
+                                <div class="twin-camera c1">📷</div>
+                                <div class="twin-camera c2">📷</div>
+                                <!-- Security patrol -->
+                                <div class="security-patrol" id="securityPatrol">🛡</div>
+                                <!-- Ambulance -->
+                                <div class="twin-ambulance" id="twinAmbulance">🚑</div>
+                            </div>
+
+                            <!-- Right Panel -->
+                            <div class="twin-right-panel">
+                                <div class="twin-panel-section">
+                                    <h4>Live Camera Status</h4>
+                                    <div class="cam-stat"><i class="fa-solid fa-video text-success"></i> <span id="camOnline">126</span> Online</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-video-slash text-danger"></i> <span id="camOffline">2</span> Offline</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-camera text-primary"></i> 128 Total</div>
+                                </div>
+                                <div class="twin-panel-section">
+                                    <h4>Drone Status</h4>
+                                    <div class="cam-stat"><i class="fa-solid fa-helicopter text-primary"></i> 4 Active Drones</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-robot text-success"></i> AI Scan: Running</div>
+                                </div>
+                                <div class="twin-panel-section">
+                                    <h4>Floodlights</h4>
+                                    <div class="floodlight-row">
+                                        <div class="floodlight blink-bright"></div>
+                                        <div class="floodlight blink-bright"></div>
+                                        <div class="floodlight blink-bright"></div>
+                                        <div class="floodlight blink-bright"></div>
+                                    </div>
+                                    <span class="text-success" style="font-size:12px">All Operational</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stadium-stats">
+                            <div class="stat-box"><span class="label">Capacity</span><span class="value">90,000</span></div>
+                            <div class="stat-box"><span class="label">Current Crowd</span><span class="value live-update neon-text" id="liveCrowdVal">84,250</span></div>
+                            <div class="stat-box"><span class="label">Available Seats</span><span class="value text-success" id="availSeats">5,750</span></div>
+                            <div class="stat-box"><span class="label">Open Gates</span><span class="value text-success">22/24</span></div>
+                            <div class="stat-box"><span class="label">Avg Queue</span><span class="value text-warning" id="avgQueue">4.2 min</span></div>
+                            <div class="stat-box"><span class="label">Emergency</span><span class="value text-success">Level 0</span></div>
+                        </div>
+                    </section>
+
+                    <!-- Crowd Heatmap & AI Predictions side-by-side -->
+                    <div class="sub-grid-2">
+                        <!-- Crowd Heatmap -->
+                        <section class="heatmap-panel glass-card slide-up">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-map neon-text"></i> Crowd Heatmap</h2>
+                            </div>
+                            <div class="heatmap-container" id="heatmapGrid">
+                                <!-- Generated by JS (20x20) -->
+                            </div>
+                        </section>
+
+                        <!-- AI Decision Intelligence Panel -->
+                        <section class="predictions-panel ai-intelligence-panel glass-card slide-up">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-brain neon-text ai-icon-spin"></i> AI Decision Intelligence</h2>
+                                <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                            </div>
+
+                            <div class="ai-intel-top">
+                                <!-- Circular Confidence Ring -->
+                                <div class="ai-ring-container">
+                                    <svg class="ai-ring-svg" viewBox="0 0 100 100">
+                                        <circle class="ring-bg" cx="50" cy="50" r="42"/>
+                                        <circle class="ring-fill" id="aiRingFill" cx="50" cy="50" r="42" stroke-dasharray="0 264"/>
+                                    </svg>
+                                    <div class="ai-ring-label">
+                                        <span class="ai-conf-value" id="aiConfidence">98.7%</span>
+                                        <span class="ai-conf-label">Confidence</span>
+                                    </div>
+                                </div>
+                                <!-- Quick Stats -->
+                                <div class="ai-quick-stats">
+                                    <div class="ai-stat-item">
+                                        <span class="ai-stat-label">Next 30 Min</span>
+                                        <span class="ai-stat-val neon-text" id="aiExpCrowd">89,650</span>
+                                        <span class="ai-stat-sub">Expected crowd</span>
+                                    </div>
+                                    <div class="ai-stat-item">
+                                        <span class="ai-stat-label">High Risk Zone</span>
+                                        <span class="ai-stat-val text-warning">Sector B</span>
+                                        <span class="ai-stat-sub badge-status status-warn">PRIORITY HIGH</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Recommendation Cards -->
+                            <h4 class="ai-reco-title">AI Recommendations</h4>
+                            <div class="ai-reco-list" id="aiRecoList">
+                                <!-- Generated by JS -->
+                            </div>
+
+                            <!-- AI Confidence Meters -->
+                            <div class="ai-meters">
+                                <div class="ai-meter-row">
+                                    <span>AI Confidence</span>
+                                    <div class="progress-track"><div class="progress-fill bg-primary js-progress glow-bar" data-width="98.7%"></div></div>
+                                    <span class="neon-text">98.7%</span>
+                                </div>
+                                <div class="ai-meter-row">
+                                    <span>Est. Accuracy</span>
+                                    <div class="progress-track"><div class="progress-fill bg-success js-progress glow-bar" data-width="97.9%"></div></div>
+                                    <span class="text-success">97.9%</span>
+                                </div>
+                            </div>
+                            <div class="ai-footer-stats">
+                                <span><i class="fa-solid fa-clock text-muted"></i> Update: every 30s</span>
+                                <span><i class="fa-solid fa-circle text-success"></i> AI Processing: Live</span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="grid-right">
+                    
+                    <!-- Weather Widget -->
+                    <section class="weather-panel glass-card slide-up">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-cloud-moon neon-text"></i> Weather</h2>
+                        </div>
+                        <div class="weather-content">
+                            <div class="weather-main">
+                                <i class="fa-solid fa-moon weather-icon anim-float"></i>
+                                <div class="temp">
+                                    <span class="deg" id="wTemp">18&deg;C</span>
+                                    <span class="cond" id="wCond">Clear Night</span>
+                                </div>
+                            </div>
+                            <div class="weather-details">
+                                <div class="w-detail">
+                                    <i class="fa-solid fa-droplet text-secondary"></i>
+                                    <span id="wHum">Humidity: 45%</span>
+                                </div>
+                                <div class="w-detail">
+                                    <i class="fa-solid fa-wind text-primary"></i>
+                                    <span id="wWind">Wind: 12 km/h</span>
+                                </div>
+                                <div class="w-detail">
+                                    <i class="fa-solid fa-cloud-rain text-info"></i>
+                                    <span id="wRain">Rain Prob: 5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Revenue Analytics -->
+                    <section class="revenue-panel glass-card slide-up">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-chart-column neon-text"></i> Revenue Analytics</h2>
+                        </div>
+                        <div class="css-chart-container">
+                            <div class="chart-bars" id="revenueChart">
+                                <!-- Generated by JS -->
+                            </div>
+                            <div class="chart-labels" id="revenueLabels">
+                                <!-- Generated by JS -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Parking Status -->
+                    <section class="parking-panel glass-card slide-up">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-square-parking neon-text"></i> Parking Zones</h2>
+                        </div>
+                        <div class="parking-grid" id="parkingGrid">
+                            <!-- Generated by JS -->
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="bottom-grid">
+                <!-- Security Monitoring -->
+                <section class="security-panel glass-card slide-up">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-shield-halved neon-text"></i> Active Security Alerts</h2>
+                    </div>
+                    <div class="alert-cards-container scroll-y" id="securityAlerts">
+                        <!-- Generated by JS -->
+                    </div>
+                </section>
+
+                <!-- Recent Activity Table -->
+                <section class="activity-panel glass-card slide-up">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-list neon-text"></i> System Log</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Event Description</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activityTableBody">
+                                <!-- Generated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Emergency Control Center -->
+            <section class="emergency-section glass-card slide-up" id="emergencySection">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-triangle-exclamation text-danger"></i> 🚨 Emergency Control Center</h2>
+                    <div class="emerg-status"><i class="fa-solid fa-circle text-success"></i> System Ready</div>
+                </div>
+
+                <div class="emergency-body">
+                    <!-- Action Buttons -->
+                    <div class="emerg-buttons">
+                        <button class="emerg-btn emerg-red ripple-btn" data-action="Lock All Gates" data-confirm="Lock All Gates? All entry/exit points will be sealed immediately.">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>Lock All Gates</span>
+                        </button>
+                        <button class="emerg-btn emerg-orange ripple-btn" data-action="Fire Evacuation" data-confirm="Trigger Fire Evacuation Protocol? All zones will receive evacuation orders.">
+                            <i class="fa-solid fa-fire"></i>
+                            <span>Fire Evacuation</span>
+                        </button>
+                        <button class="emerg-btn emerg-blue ripple-btn" data-action="Medical Emergency" data-confirm="Dispatch Medical Emergency teams to all zones?">
+                            <i class="fa-solid fa-kit-medical"></i>
+                            <span>Medical Emergency</span>
+                        </button>
+                        <button class="emerg-btn emerg-purple ripple-btn" data-action="Dispatch Security" data-confirm="Deploy all security personnel to active positions?">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>Dispatch Security</span>
+                        </button>
+                        <button class="emerg-btn emerg-cyan ripple-btn" data-action="Public Announcement" data-confirm="Broadcast a public announcement to all stadium speakers?">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <span>Public Announcement</span>
+                        </button>
+                        <button class="emerg-btn emerg-darkred ripple-btn" data-action="Contact Police" data-confirm="Alert Police and emergency services immediately?">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>Contact Police</span>
+                        </button>
+                    </div>
+
+                    <!-- Emergency Contacts + Readiness -->
+                    <div class="emerg-bottom">
+                        <div class="emerg-contacts">
+                            <h4>Emergency Contacts</h4>
+                            <div class="contact-row">
+                                <div class="contact-info"><i class="fa-solid fa-shield text-primary"></i> <span>Security Team</span></div>
+                                <div class="contact-meta"><span class="badge-status status-ok">AVAILABLE</span><span class="contact-rt">12 sec</span></div>
+                            </div>
+                            <div class="contact-row">
+                                <div class="contact-info"><i class="fa-solid fa-kit-medical text-secondary"></i> <span>Medical Team</span></div>
+                                <div class="contact-meta"><span class="badge-status status-ok">AVAILABLE</span><span class="contact-rt">18 sec</span></div>
+                            </div>
+                            <div class="contact-row">
+                                <div class="contact-info"><i class="fa-solid fa-fire-extinguisher text-warning"></i> <span>Fire Department</span></div>
+                                <div class="contact-meta"><span class="badge-status status-ok">STANDBY</span><span class="contact-rt">45 sec</span></div>
+                            </div>
+                            <div class="contact-row">
+                                <div class="contact-info"><i class="fa-solid fa-car-burst text-danger"></i> <span>Police</span></div>
+                                <div class="contact-meta"><span class="badge-status status-warn">ON CALL</span><span class="contact-rt">60 sec</span></div>
+                            </div>
+                        </div>
+
+                        <div class="emerg-readiness">
+                            <h4>Emergency Readiness</h4>
+                            <div class="readiness-ring-wrap">
+                                <svg class="readiness-ring" viewBox="0 0 80 80">
+                                    <circle cx="40" cy="40" r="34" class="ring-bg"/>
+                                    <circle cx="40" cy="40" r="34" class="ring-fill-green" stroke-dasharray="0 214" id="readinessRing"/>
+                                </svg>
+                                <div class="readiness-label">
+                                    <span class="readiness-pct text-success">99%</span>
+                                    <span>Ready</span>
+                                </div>
+                            </div>
+                            <div class="readiness-meta">
+                                <div><i class="fa-solid fa-clock text-muted"></i> Last Drill: 2 Days Ago</div>
+                                <div><i class="fa-solid fa-bolt text-primary"></i> Response: 18 sec</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div> <!-- /.dashboard-container -->
+
+        <!-- Parking View -->
+        <div id="view-parking" class="view-section hidden">
+            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem;">
+                <div class="hero-content">
+                    <h1>SMART PARKING HUB</h1>
+                    <p>Real-time vehicle flow, VIP booking, and autonomous zone management</p>
+                </div>
+            </section>
+            
+            <div class="main-grid">
+                <div class="grid-left" style="flex: 2;">
+                    <section class="glass-card premium-parking-map">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-map-location-dot neon-text"></i> Interactive Zone Map</h2>
+                        </div>
+                        <div class="parking-layout" id="premiumParkingMap">
+                            <!-- JS Will Render Zones Here -->
+                        </div>
+                    </section>
+                </div>
+                <div class="grid-right">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-car-on neon-text"></i> Live Capacity</h2>
+                        </div>
+                        <div class="capacity-bars" id="parkingCapacityBars">
+                            <!-- JS will render bars -->
+                        </div>
+                    </section>
+                    <section class="glass-card mt-3">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-star neon-text"></i> VIP Booking</h2>
+                        </div>
+                        <div class="vip-booking-form">
+                            <input type="text" class="cyber-input mb-2" placeholder="License Plate">
+                            <input type="time" class="cyber-input mb-2">
+                            <select class="cyber-input mb-2">
+                                <option>Zone A (VIP)</option>
+                                <option>Zone B (Premium)</option>
+                            </select>
+                            <button class="btn btn-primary w-100 ripple-btn">Book Slot</button>
+                        </div>
+                    </section>
+                </div>
+                </div>
+            </div>
+            
+            <!-- Zone Details Container -->
+            <section class="glass-card mt-3 hidden" id="zoneDetailsContainer" style="display: none; margin-top: 2rem;">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h2><i class="fa-solid fa-magnifying-glass-location neon-text"></i> Zone Details: <span id="activeZoneTitle">None</span></h2>
+                    <button class="icon-btn text-muted" id="closeZoneDetailsBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                
+                <div class="parking-legends mt-2 mb-3 d-flex gap-3 text-small">
+                    <div><span class="legend-box" style="background:var(--success)"></span> Empty Car</div>
+                    <div><span class="legend-box" style="background:#555"></span> Taken Car</div>
+                    <div><span class="legend-box" style="background:var(--info); border-radius:50%"></span> 2-Wheeler</div>
+                    <div><span class="legend-box" style="background:var(--warning)"></span> Cab/Auto</div>
+                </div>
+
+                <div class="zone-grid-details" id="zoneGridDetails">
+                    <!-- JS renders detailed grid here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Security View -->
+        <div id="view-security" class="view-section hidden">
+            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem;">
+                <div class="hero-content">
+                    <h1>SECURITY COMMAND CENTER</h1>
+                    <p>Global threat detection, camera feeds, and rapid incident response</p>
+                </div>
+            </section>
+            
+            <div class="main-grid">
+                <div class="grid-left" style="flex: 2;">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-video neon-text"></i> Live Camera Network</h2>
+                        </div>
+                        <div class="camera-grid" id="securityCameraGrid">
+                            <!-- JS will render video placeholders -->
+                        </div>
+                    </section>
+                </div>
+                <div class="grid-right">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-list-check neon-text"></i> Incident Log</h2>
+                        </div>
+                        <div class="incident-log" id="incidentLogList">
+                            <!-- JS will render log items -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crowd Analytics View -->
+        <div id="view-crowd" class="view-section hidden">
+            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(20,0,60,0.7) 0%, rgba(40,0,100,0.7) 50%, rgba(0,80,180,0.6) 100%);">
+                <div class="hero-content">
+                    <h1>CROWD INTELLIGENCE</h1>
+                    <p>Real-time crowd flow, demographics, gate pressure &amp; sentiment analysis</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="ai-core-animation"><div class="core-ring outer-ring"></div><div class="core-ring middle-ring"></div><div class="core-ring inner-ring"></div><div class="core-center"><i class="fa-solid fa-users-viewfinder"></i></div></div>
+                </div>
+            </section>
+
+            <!-- Crowd KPI row -->
+            <div class="kpi-grid" style="margin-bottom: 1.5rem;" id="crowdKpiGrid"></div>
+
+            <!-- Main 2-col grid -->
+            <div class="main-grid" style="margin-bottom: 1.5rem;">
+                <!-- Attendance Chart -->
+                <div class="grid-left">
+                    <section class="glass-card" style="height:100%;">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-chart-bar neon-text"></i> Attendance by Hour</h2>
+                            <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                        </div>
+                        <div class="crowd-bar-chart" id="crowdBarChart"></div>
+                    </section>
+                </div>
+
+                <!-- Demographics donut-style -->
+                <div class="grid-right">
+                    <section class="glass-card" style="height: 100%;">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-chart-pie neon-text"></i> Demographics</h2>
+                        </div>
+                        <div class="demo-rings" id="demoRings"></div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Gate Pressure + Sentiment -->
+            <div class="sub-grid-2">
+                <!-- Gate Pressure -->
+                <section class="glass-card">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-door-open neon-text"></i> Gate Pressure (Live)</h2>
+                    </div>
+                    <div class="gate-pressure-list" id="gatePressureList"></div>
+                </section>
+
+                <!-- Social Sentiment -->
+                <section class="glass-card">
+                    <div class="panel-header">
+                        <h2><i class="fa-brands fa-twitter neon-text"></i> Social Sentiment</h2>
+                        <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                    </div>
+                    <div class="sentiment-container" id="sentimentContainer"></div>
+                </section>
+            </div>
+
+            <!-- Zone Heatmap + Flow Map row -->
+            <div class="main-grid" style="margin-top: 1.5rem;">
+                <div class="grid-left">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-fire neon-text"></i> Zone Crowd Density</h2>
+                        </div>
+                        <div id="crowdZoneDensity" class="crowd-zone-density"></div>
+                    </section>
+                </div>
+                <div class="grid-right">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-route neon-text"></i> AI Crowd Predictions</h2>
+                        </div>
+                        <div id="crowdPredictions" class="crowd-predictions-list"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather View -->
+        <div id="view-weather" class="view-section hidden">
+            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(2,0,36,0.6) 0%, rgba(9,102,121,0.6) 35%, rgba(0,212,255,0.6) 100%);">
+                <div class="hero-content">
+                    <h1>METEOROLOGICAL STATION</h1>
+                    <p>Hyper-local weather forecasting and event impact analysis</p>
+                </div>
+            </section>
+            
+            <div class="weather-dashboard">
+                <section class="glass-card weather-timeline">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-clock neon-text"></i> 24-Hour Forecast</h2>
+                    </div>
+                    <div class="hourly-forecast-row" id="hourlyForecast">
+                        <!-- JS renders hourly cards -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Tickets & Booking View -->
+        <div id="view-tickets" class="view-section hidden">
+            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem;">
+                <div class="hero-content">
+                    <h1>BOX OFFICE & TICKETING</h1>
+                    <p>Live inventory, dynamic pricing, and seat allocation management</p>
+                </div>
+            </section>
+            
+            <div class="main-grid">
+                <div class="grid-left" style="flex: 2;">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-chair neon-text"></i> Live Seat Map</h2>
+                        </div>
+                        <div class="seat-map-container" id="interactiveSeatMap">
+                            <!-- JS generates seat grid -->
+                        </div>
+                    </section>
+                </div>
+                <div class="grid-right">
+                    <section class="glass-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-money-bill-wave neon-text"></i> Dynamic Pricing</h2>
+                        </div>
+                        <div class="pricing-tiers" id="pricingTiers">
+                            <!-- JS generates pricing -->
+                        </div>
+                    </section>
+                    
+                    <section class="glass-card mt-3" id="bookingCheckoutPanel" style="display: none;">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-cart-shopping neon-text"></i> Booking Summary</h2>
+                        </div>
+                        <div style="padding: 15px;">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Selected Seats:</span>
+                                <strong id="selectedSeatCount" class="text-primary">0</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Total Price:</span>
+                                <strong id="totalPrice" class="text-success">₹0</strong>
+                            </div>
+                            <button class="btn btn-primary w-100 ripple-btn" id="confirmBookingBtn">Confirm Booking</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal-overlay hidden" id="emergModalOverlay">
+            <div class="confirm-modal glass-card">
+                <div class="modal-icon"><i class="fa-solid fa-triangle-exclamation text-danger"></i></div>
+                <h3 id="modalTitle">Confirm Action</h3>
+                <p id="modalDesc">Are you sure?</p>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="modalYes">YES, PROCEED</button>
+                    <button class="btn btn-secondary" id="modalNo">CANCEL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 StadiumOS AI. All rights reserved.</p>
+        </footer>
+
+    </main>
+
+    <!-- Advanced AI Stadium Copilot -->
+    <div class="ai-copilot-overlay hidden" id="aiCopilotOverlay"></div>
+    
+    <div class="ai-copilot-container glass-card hidden" id="aiCopilotContainer">
+        <!-- Main Chat Area -->
+        <div class="ai-copilot-main">
+            <!-- Header -->
+            <div class="ai-copilot-header">
+                <div class="header-left-group">
+                    <div class="ai-avatar-container pulse-ring">
+                        <img src="https://ui-avatars.com/api/?name=AI&background=00E5FF&color=000&rounded=true" alt="AI Copilot" id="aiAvatarImage">
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="ai-header-titles">
+                        <h3 class="neon-text-cyan">AI Stadium Copilot</h3>
+                        <div class="ai-persona-selector">
+                            <select id="aiPersonaSelect" class="cyber-select">
+                                <option value="organizer">Organizer Assistant</option>
+                                <option value="security">Security Commander</option>
+                                <option value="fan">Fan Assistant</option>
+                                <option value="volunteer">Volunteer Coordinator</option>
+                                <option value="medical">Medical Assistant</option>
+                                <option value="transport">Transport Manager</option>
+                                <option value="accessibility">Accessibility Assistant</option>
+                                <option value="sustainability">Sustainability Advisor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right-group">
+                    <div class="ai-language-selector">
+                        <i class="fa-solid fa-globe"></i>
+                        <select id="aiLanguageSelect" class="cyber-select-small">
+                            <option value="en">EN</option>
+                            <option value="es">ES</option>
+                            <option value="fr">FR</option>
+                            <option value="ar">AR</option>
+                            <option value="hi">HI</option>
+                            <option value="pt">PT</option>
+                            <option value="ja">JA</option>
+                        </select>
+                    </div>
+                    <button class="icon-btn ai-action-btn" id="aiClearChatBtn" title="Clear Chat"><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiExportBtn" title="Export PDF Report"><i class="fa-solid fa-file-pdf"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiExpandBtn" title="Toggle Fullscreen"><i class="fa-solid fa-expand"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiCloseBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+
+            <!-- Chat History -->
+            <div class="ai-copilot-body" id="aiChatHistory">
+                <!-- Welcome Message -->
+                <div class="ai-chat-bubble ai-system-msg slide-up">
+                    <div class="bubble-avatar"><i class="fa-solid fa-robot"></i></div>
+                    <div class="bubble-content">
+                        <p>Systems online. I am your <strong>AI Stadium Copilot</strong>. I am currently operating in <span class="neon-text-cyan" id="currentPersonaDisplay">Organizer Assistant</span> mode.</p>
+                        <p>How can I assist you with the stadium operations today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator (Hidden by default) -->
+            <div class="ai-typing-indicator hidden" id="aiTypingIndicator">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+
+            <!-- Quick Prompts Horizontal Scroll -->
+            <div class="ai-suggested-prompts-wrapper">
+                <div class="ai-suggested-prompts" id="aiSuggestedPrompts">
+                    <!-- Populated by JS based on Persona -->
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="ai-copilot-footer">
+                <div class="ai-input-wrapper">
+                    <button class="icon-btn voice-btn" id="aiVoiceBtn" title="Voice Input"><i class="fa-solid fa-microphone"></i></button>
+                    <input type="text" id="aiChatInput" placeholder="Enter command or ask a question (e.g., 'Open emergency mode')..." class="cyber-input" autocomplete="off">
+                    <button class="icon-btn send-btn" id="aiSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+                <div class="accessibility-toggles">
+                    <button class="text-btn text-small" id="toggleHighContrast"><i class="fa-solid fa-circle-half-stroke"></i> High Contrast</button>
+                    <button class="text-btn text-small" id="toggleLargeText"><i class="fa-solid fa-text-height"></i> Large Text</button>
+                    <button class="text-btn text-small disabled" title="Coming Soon"><i class="fa-solid fa-hands"></i> Sign Language</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side Analytics & Insights Panel (Visible mainly in expanded mode) -->
+        <div class="ai-copilot-side-panel" id="aiSidePanel">
+            <div class="side-panel-header">
+                <h4><i class="fa-solid fa-satellite-dish pulse-icon"></i> Live AI Insights</h4>
+            </div>
+            
+            <div class="insight-cards-container">
+                <!-- Risk Card -->
+                <div class="insight-card cyber-border">
+                    <div class="insight-header">
+                        <span class="insight-title">Current Risk</span>
+                        <span class="badge badge-success" id="riskBadge">LOW</span>
+                    </div>
+                    <div class="insight-body">
+                        <p class="insight-value" id="crowdStatusValue">Safe</p>
+                        <p class="insight-label">Crowd Prediction</p>
+                    </div>
+                </div>
+
+                <!-- Operations Card -->
+                <div class="insight-card cyber-border">
+                    <div class="insight-header">
+                        <span class="insight-title">Parking</span>
+                        <span class="insight-stat text-warning">87%</span>
+                    </div>
+                    <div class="insight-recommendation highlight-box">
+                        <i class="fa-solid fa-lightbulb text-info"></i>
+                        <span><strong>Recommendation:</strong> Open Parking P3</span>
+                        <button class="btn btn-sm btn-outline-cyan execute-action-btn" data-action="Open Parking P3">Execute</button>
+                    </div>
+                </div>
+
+                <!-- Food Demand Card -->
+                <div class="insight-card cyber-border">
+                    <div class="insight-header">
+                        <span class="insight-title">Food Queue</span>
+                        <span class="insight-stat text-danger">High</span>
+                    </div>
+                    <div class="insight-recommendation highlight-box">
+                        <i class="fa-solid fa-lightbulb text-info"></i>
+                        <span><strong>Recommendation:</strong> Open Counter 6</span>
+                        <button class="btn btn-sm btn-outline-cyan execute-action-btn" data-action="Open Counter 6">Execute</button>
+                    </div>
+                </div>
+
+                <!-- Weather Card -->
+                <div class="insight-card cyber-border">
+                    <div class="insight-header">
+                        <span class="insight-title">Weather Alert</span>
+                        <span class="insight-stat text-info"><i class="fa-solid fa-cloud-showers-heavy"></i> Rain</span>
+                    </div>
+                    <p class="text-small text-muted">Expected in 20 min</p>
+                    <div class="insight-recommendation highlight-box">
+                        <i class="fa-solid fa-lightbulb text-info"></i>
+                        <span><strong>Recommendation:</strong> Open Covered Waiting Area</span>
+                        <button class="btn btn-sm btn-outline-cyan execute-action-btn" data-action="Open Covered Area">Execute</button>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions / Pinned Commands -->
+                <div class="pinned-commands mt-3">
+                    <h5 class="section-subtitle">Pinned Commands</h5>
+                    <div class="command-grid">
+                        <button class="btn-cyber-chip" onclick="document.getElementById('aiChatInput').value='Show live incidents'; document.getElementById('aiSendBtn').click();"><i class="fa-solid fa-video"></i> Live Incidents</button>
+                        <button class="btn-cyber-chip text-danger" onclick="document.getElementById('aiChatInput').value='Activate emergency mode'; document.getElementById('aiSendBtn').click();"><i class="fa-solid fa-triangle-exclamation"></i> Emergency Mode</button>
+                        <button class="btn-cyber-chip" onclick="document.getElementById('aiChatInput').value='Generate executive report'; document.getElementById('aiSendBtn').click();"><i class="fa-solid fa-file-lines"></i> Executive Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>
