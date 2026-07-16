@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Stadium Operating System</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="dark-theme">
-    
+
+    <div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <h2>StadiumOS Login</h2>
+
+    <input
+      type="text"
+      id="username"
+      placeholder="Username"
+      autocomplete="username"
+    />
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    />
+
+    <button id="loginBtn">Login</button>
+
+    <p id="loginError"></p>
+  </div>
+</div>
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -29,7 +56,7 @@
                 <i class="fa-solid fa-times"></i>
             </button>
         </div>
-        
+
         <ul class="nav-links">
             <li class="active">
                 <a href="#" data-view="dashboard">
@@ -91,7 +118,7 @@
 
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
-        
+
         <!-- Top Navbar -->
         <header class="topbar premium-header">
             <!-- Left Side -->
@@ -107,7 +134,7 @@
                     <span class="pulse-dot"></span> Online
                 </div>
             </div>
-            
+
             <!-- Center Side -->
             <div class="topbar-center">
                 <div class="premium-search">
@@ -118,7 +145,7 @@
 
             <!-- Right Side -->
             <div class="topbar-right">
-                
+
                 <div class="quick-actions">
                     <button class="icon-btn" title="Export Report"><i class="fa-solid fa-file-export"></i></button>
                     <button class="icon-btn" title="Refresh Dashboard"><i class="fa-solid fa-rotate-right"></i></button>
@@ -146,7 +173,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="datetime-digital">
                     <div class="date-part">
                         <span id="currentDay">THURSDAY</span>
@@ -158,7 +185,8 @@
                 <div class="profile-wrapper">
                     <div class="profile" id="profileBtn">
                         <div class="avatar-container">
-                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=00E5FF&color=fff" alt="Profile">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=00E5FF&color=fff"
+                                alt="Profile">
                             <span class="online-badge"></span>
                         </div>
                         <div class="profile-info">
@@ -173,7 +201,8 @@
                             <li><a href="#"><i class="fa-solid fa-user"></i> Profile</a></li>
                             <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
                             <li class="nav-divider"></li>
-                            <li><a href="#" class="text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            <li><a href="#" class="text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -181,7 +210,7 @@
         </header>
 
         <div id="view-dashboard" class="dashboard-container view-section active">
-            
+
             <!-- Hero Section -->
             <section class="hero-section glass-card slide-up">
                 <div class="hero-content">
@@ -212,47 +241,51 @@
                     <div class="kpi-icon text-primary"><i class="fa-solid fa-users"></i></div>
                     <div class="kpi-info">
                         <h3>Total Visitors</h3>
-                        <div class="kpi-value counter" data-target="84250">0</div>
-                        <p class="kpi-desc text-success"><i class="fa-solid fa-arrow-trend-up"></i> +4.5% vs last event</p>
+                        <div class="kpi-value" id="visitors">0</div>
+                        <p class="kpi-desc text-success"><i class="fa-solid fa-arrow-trend-up"></i> +4.5% vs last event
+                        </p>
                     </div>
                 </div>
-                
+
                 <div class="kpi-card glass-card fade-in delay-2">
                     <div class="kpi-icon text-secondary"><i class="fa-solid fa-chart-pie"></i></div>
                     <div class="kpi-info">
                         <h3>Occupancy</h3>
-                        <div class="kpi-value"><span class="counter" data-target="92">0</span>%</div>
+                        <div class="kpi-value"><span id="occupancy">0</span>%</div>
                         <p class="kpi-desc text-success"><i class="fa-solid fa-check"></i> Optimal range</p>
                     </div>
                 </div>
-                
+
                 <div class="kpi-card glass-card fade-in delay-3">
                     <div class="kpi-icon text-success"><i class="fa-solid fa-sack-dollar"></i></div>
                     <div class="kpi-info">
                         <h3>Revenue</h3>
-                        <div class="kpi-value">$<span class="counter" data-target="1245000">0</span></div>
-                        <p class="kpi-desc text-success"><i class="fa-solid fa-arrow-trend-up"></i> +12% vs projection</p>
+                        <div class="kpi-value">₹<span id="revenue">0</span></div>
+                        <p class="kpi-desc text-success"><i class="fa-solid fa-arrow-trend-up"></i> +12% vs projection
+                        </p>
                     </div>
                 </div>
-                
+
                 <div class="kpi-card glass-card fade-in delay-4">
                     <div class="kpi-icon text-danger"><i class="fa-solid fa-shield-halved"></i></div>
                     <div class="kpi-info">
                         <h3>Security Alerts</h3>
-                        <div class="kpi-value counter text-danger" id="kpiAlerts" data-target="3">0</div>
-                        <p class="kpi-desc text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Requires attention</p>
+                        <div class="kpi-value text-danger" id="alerts">0</div>
+                        <p class="kpi-desc text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Requires
+                            attention</p>
                     </div>
                 </div>
-                
+
                 <div class="kpi-card glass-card fade-in delay-5">
                     <div class="kpi-icon text-warning"><i class="fa-solid fa-square-parking"></i></div>
                     <div class="kpi-info">
                         <h3>Parking Available</h3>
-                        <div class="kpi-value counter text-warning" id="kpiParking" data-target="128">0</div>
-                        <p class="kpi-desc text-warning"><i class="fa-solid fa-circle-exclamation"></i> Nearing capacity</p>
+                        <div class="kpi-value text-warning" id="parking">0</div>
+                        <p class="kpi-desc text-warning"><i class="fa-solid fa-circle-exclamation"></i> Nearing capacity
+                        </p>
                     </div>
                 </div>
-                
+
                 <div class="kpi-card glass-card fade-in delay-6">
                     <div class="kpi-icon text-primary"><i class="fa-solid fa-burger"></i></div>
                     <div class="kpi-info">
@@ -265,10 +298,10 @@
 
             <!-- Main Dashboard Grid -->
             <div class="main-grid">
-                
+
                 <!-- Left Column -->
                 <div class="grid-left">
-                    
+
                     <!-- Interactive Stadium Digital Twin -->
                     <section class="live-stadium-panel glass-card slide-up">
                         <div class="panel-header">
@@ -280,7 +313,8 @@
                             <!-- SVG Stadium Map -->
                             <div class="twin-map" id="twinMap">
                                 <!-- North Stand -->
-                                <div class="twin-zone zone-north" data-zone="North Stand" data-occ="82%" data-risk="Low" data-action="All gates open">
+                                <div class="twin-zone zone-north" data-zone="North Stand" data-occ="82%" data-risk="Low"
+                                    data-action="All gates open">
                                     <span class="zone-label">North<br>Stand</span>
                                     <div class="zone-tooltip">
                                         <strong>North Stand</strong>
@@ -290,7 +324,8 @@
                                     </div>
                                 </div>
                                 <!-- South Stand -->
-                                <div class="twin-zone zone-south" data-zone="South Stand" data-occ="91%" data-risk="Medium" data-action="Open Gate 8">
+                                <div class="twin-zone zone-south" data-zone="South Stand" data-occ="91%"
+                                    data-risk="Medium" data-action="Open Gate 8">
                                     <span class="zone-label">South<br>Stand</span>
                                     <div class="zone-tooltip">
                                         <strong>South Stand</strong>
@@ -300,7 +335,8 @@
                                     </div>
                                 </div>
                                 <!-- East Stand -->
-                                <div class="twin-zone zone-east" data-zone="East Stand" data-occ="87%" data-risk="Medium" data-action="Open Gate 12">
+                                <div class="twin-zone zone-east" data-zone="East Stand" data-occ="87%"
+                                    data-risk="Medium" data-action="Open Gate 12">
                                     <span class="zone-label">East<br>Stand</span>
                                     <div class="zone-tooltip">
                                         <strong>East Stand (Sector B)</strong>
@@ -310,7 +346,8 @@
                                     </div>
                                 </div>
                                 <!-- West Stand -->
-                                <div class="twin-zone zone-west" data-zone="West Stand" data-occ="74%" data-risk="Low" data-action="Normal ops">
+                                <div class="twin-zone zone-west" data-zone="West Stand" data-occ="74%" data-risk="Low"
+                                    data-action="Normal ops">
                                     <span class="zone-label">West<br>Stand</span>
                                     <div class="zone-tooltip">
                                         <strong>West Stand</strong>
@@ -320,7 +357,8 @@
                                     </div>
                                 </div>
                                 <!-- VIP -->
-                                <div class="twin-zone zone-vip" data-zone="VIP" data-occ="100%" data-risk="None" data-action="Reserved">
+                                <div class="twin-zone zone-vip" data-zone="VIP" data-occ="100%" data-risk="None"
+                                    data-action="Reserved">
                                     <span class="zone-label">VIP</span>
                                     <div class="zone-tooltip">
                                         <strong>VIP Zone</strong>
@@ -338,7 +376,8 @@
                                     <div class="drone-icon anim-float">🛸</div>
                                 </div>
                                 <!-- Food Court -->
-                                <div class="twin-zone zone-food" data-zone="Food Court" data-occ="68%" data-risk="Low" data-action="Normal">
+                                <div class="twin-zone zone-food" data-zone="Food Court" data-occ="68%" data-risk="Low"
+                                    data-action="Normal">
                                     <span class="zone-label">🍔 Food</span>
                                     <div class="zone-tooltip">
                                         <strong>Food Court</strong>
@@ -347,7 +386,8 @@
                                     </div>
                                 </div>
                                 <!-- Parking -->
-                                <div class="twin-zone zone-parking" data-zone="Parking" data-occ="93%" data-risk="High" data-action="Redirect to Zone C">
+                                <div class="twin-zone zone-parking" data-zone="Parking" data-occ="93%" data-risk="High"
+                                    data-action="Redirect to Zone C">
                                     <span class="zone-label">🅿 Parking</span>
                                     <div class="zone-tooltip">
                                         <strong>Main Parking</strong>
@@ -373,14 +413,19 @@
                             <div class="twin-right-panel">
                                 <div class="twin-panel-section">
                                     <h4>Live Camera Status</h4>
-                                    <div class="cam-stat"><i class="fa-solid fa-video text-success"></i> <span id="camOnline">126</span> Online</div>
-                                    <div class="cam-stat"><i class="fa-solid fa-video-slash text-danger"></i> <span id="camOffline">2</span> Offline</div>
-                                    <div class="cam-stat"><i class="fa-solid fa-camera text-primary"></i> 128 Total</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-video text-success"></i> <span
+                                            id="camOnline">126</span> Online</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-video-slash text-danger"></i> <span
+                                            id="camOffline">2</span> Offline</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-camera text-primary"></i> 128 Total
+                                    </div>
                                 </div>
                                 <div class="twin-panel-section">
                                     <h4>Drone Status</h4>
-                                    <div class="cam-stat"><i class="fa-solid fa-helicopter text-primary"></i> 4 Active Drones</div>
-                                    <div class="cam-stat"><i class="fa-solid fa-robot text-success"></i> AI Scan: Running</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-helicopter text-primary"></i> 4 Active
+                                        Drones</div>
+                                    <div class="cam-stat"><i class="fa-solid fa-robot text-success"></i> AI Scan:
+                                        Running</div>
                                 </div>
                                 <div class="twin-panel-section">
                                     <h4>Floodlights</h4>
@@ -396,12 +441,18 @@
                         </div>
 
                         <div class="stadium-stats">
-                            <div class="stat-box"><span class="label">Capacity</span><span class="value">90,000</span></div>
-                            <div class="stat-box"><span class="label">Current Crowd</span><span class="value live-update neon-text" id="liveCrowdVal">84,250</span></div>
-                            <div class="stat-box"><span class="label">Available Seats</span><span class="value text-success" id="availSeats">5,750</span></div>
-                            <div class="stat-box"><span class="label">Open Gates</span><span class="value text-success">22/24</span></div>
-                            <div class="stat-box"><span class="label">Avg Queue</span><span class="value text-warning" id="avgQueue">4.2 min</span></div>
-                            <div class="stat-box"><span class="label">Emergency</span><span class="value text-success">Level 0</span></div>
+                            <div class="stat-box"><span class="label">Capacity</span><span class="value">90,000</span>
+                            </div>
+                            <div class="stat-box"><span class="label">Current Crowd</span><span
+                                    class="value live-update neon-text" id="liveCrowdVal">84,250</span></div>
+                            <div class="stat-box"><span class="label">Available Seats</span><span
+                                    class="value text-success" id="availSeats">5,750</span></div>
+                            <div class="stat-box"><span class="label">Open Gates</span><span
+                                    class="value text-success">22/24</span></div>
+                            <div class="stat-box"><span class="label">Avg Queue</span><span class="value text-warning"
+                                    id="avgQueue">4.2 min</span></div>
+                            <div class="stat-box"><span class="label">Emergency</span><span
+                                    class="value text-success">Level 0</span></div>
                         </div>
                     </section>
 
@@ -420,7 +471,8 @@
                         <!-- AI Decision Intelligence Panel -->
                         <section class="predictions-panel ai-intelligence-panel glass-card slide-up">
                             <div class="panel-header">
-                                <h2><i class="fa-solid fa-brain neon-text ai-icon-spin"></i> AI Decision Intelligence</h2>
+                                <h2><i class="fa-solid fa-brain neon-text ai-icon-spin"></i> AI Decision Intelligence
+                                </h2>
                                 <span class="live-indicator"><span class="dot"></span> LIVE</span>
                             </div>
 
@@ -428,8 +480,9 @@
                                 <!-- Circular Confidence Ring -->
                                 <div class="ai-ring-container">
                                     <svg class="ai-ring-svg" viewBox="0 0 100 100">
-                                        <circle class="ring-bg" cx="50" cy="50" r="42"/>
-                                        <circle class="ring-fill" id="aiRingFill" cx="50" cy="50" r="42" stroke-dasharray="0 264"/>
+                                        <circle class="ring-bg" cx="50" cy="50" r="42" />
+                                        <circle class="ring-fill" id="aiRingFill" cx="50" cy="50" r="42"
+                                            stroke-dasharray="0 264" />
                                     </svg>
                                     <div class="ai-ring-label">
                                         <span class="ai-conf-value" id="aiConfidence">98.7%</span>
@@ -461,12 +514,18 @@
                             <div class="ai-meters">
                                 <div class="ai-meter-row">
                                     <span>AI Confidence</span>
-                                    <div class="progress-track"><div class="progress-fill bg-primary js-progress glow-bar" data-width="98.7%"></div></div>
+                                    <div class="progress-track">
+                                        <div class="progress-fill bg-primary js-progress glow-bar" data-width="98.7%">
+                                        </div>
+                                    </div>
                                     <span class="neon-text">98.7%</span>
                                 </div>
                                 <div class="ai-meter-row">
                                     <span>Est. Accuracy</span>
-                                    <div class="progress-track"><div class="progress-fill bg-success js-progress glow-bar" data-width="97.9%"></div></div>
+                                    <div class="progress-track">
+                                        <div class="progress-fill bg-success js-progress glow-bar" data-width="97.9%">
+                                        </div>
+                                    </div>
                                     <span class="text-success">97.9%</span>
                                 </div>
                             </div>
@@ -480,7 +539,7 @@
 
                 <!-- Right Column -->
                 <div class="grid-right">
-                    
+
                     <!-- Weather Widget -->
                     <section class="weather-panel glass-card slide-up">
                         <div class="panel-header">
@@ -583,27 +642,33 @@
                 <div class="emergency-body">
                     <!-- Action Buttons -->
                     <div class="emerg-buttons">
-                        <button class="emerg-btn emerg-red ripple-btn" data-action="Lock All Gates" data-confirm="Lock All Gates? All entry/exit points will be sealed immediately.">
+                        <button class="emerg-btn emerg-red ripple-btn" data-action="Lock All Gates"
+                            data-confirm="Lock All Gates? All entry/exit points will be sealed immediately.">
                             <i class="fa-solid fa-lock"></i>
                             <span>Lock All Gates</span>
                         </button>
-                        <button class="emerg-btn emerg-orange ripple-btn" data-action="Fire Evacuation" data-confirm="Trigger Fire Evacuation Protocol? All zones will receive evacuation orders.">
+                        <button class="emerg-btn emerg-orange ripple-btn" data-action="Fire Evacuation"
+                            data-confirm="Trigger Fire Evacuation Protocol? All zones will receive evacuation orders.">
                             <i class="fa-solid fa-fire"></i>
                             <span>Fire Evacuation</span>
                         </button>
-                        <button class="emerg-btn emerg-blue ripple-btn" data-action="Medical Emergency" data-confirm="Dispatch Medical Emergency teams to all zones?">
+                        <button class="emerg-btn emerg-blue ripple-btn" data-action="Medical Emergency"
+                            data-confirm="Dispatch Medical Emergency teams to all zones?">
                             <i class="fa-solid fa-kit-medical"></i>
                             <span>Medical Emergency</span>
                         </button>
-                        <button class="emerg-btn emerg-purple ripple-btn" data-action="Dispatch Security" data-confirm="Deploy all security personnel to active positions?">
+                        <button class="emerg-btn emerg-purple ripple-btn" data-action="Dispatch Security"
+                            data-confirm="Deploy all security personnel to active positions?">
                             <i class="fa-solid fa-shield-halved"></i>
                             <span>Dispatch Security</span>
                         </button>
-                        <button class="emerg-btn emerg-cyan ripple-btn" data-action="Public Announcement" data-confirm="Broadcast a public announcement to all stadium speakers?">
+                        <button class="emerg-btn emerg-cyan ripple-btn" data-action="Public Announcement"
+                            data-confirm="Broadcast a public announcement to all stadium speakers?">
                             <i class="fa-solid fa-bullhorn"></i>
                             <span>Public Announcement</span>
                         </button>
-                        <button class="emerg-btn emerg-darkred ripple-btn" data-action="Contact Police" data-confirm="Alert Police and emergency services immediately?">
+                        <button class="emerg-btn emerg-darkred ripple-btn" data-action="Contact Police"
+                            data-confirm="Alert Police and emergency services immediately?">
                             <i class="fa-solid fa-user-shield"></i>
                             <span>Contact Police</span>
                         </button>
@@ -614,20 +679,31 @@
                         <div class="emerg-contacts">
                             <h4>Emergency Contacts</h4>
                             <div class="contact-row">
-                                <div class="contact-info"><i class="fa-solid fa-shield text-primary"></i> <span>Security Team</span></div>
-                                <div class="contact-meta"><span class="badge-status status-ok">AVAILABLE</span><span class="contact-rt">12 sec</span></div>
+                                <div class="contact-info"><i class="fa-solid fa-shield text-primary"></i> <span>Security
+                                        Team</span></div>
+                                <div class="contact-meta"><span class="badge-status status-ok">AVAILABLE</span><span
+                                        class="contact-rt">12 sec</span></div>
                             </div>
                             <div class="contact-row">
-                                <div class="contact-info"><i class="fa-solid fa-kit-medical text-secondary"></i> <span>Medical Team</span></div>
-                                <div class="contact-meta"><span class="badge-status status-ok">AVAILABLE</span><span class="contact-rt">18 sec</span></div>
+                                <div class="contact-info"><i class="fa-solid fa-kit-medical text-secondary"></i>
+                                    <span>Medical Team</span>
+                                </div>
+                                <div class="contact-meta"><span class="badge-status status-ok">AVAILABLE</span><span
+                                        class="contact-rt">18 sec</span></div>
                             </div>
                             <div class="contact-row">
-                                <div class="contact-info"><i class="fa-solid fa-fire-extinguisher text-warning"></i> <span>Fire Department</span></div>
-                                <div class="contact-meta"><span class="badge-status status-ok">STANDBY</span><span class="contact-rt">45 sec</span></div>
+                                <div class="contact-info"><i class="fa-solid fa-fire-extinguisher text-warning"></i>
+                                    <span>Fire Department</span>
+                                </div>
+                                <div class="contact-meta"><span class="badge-status status-ok">STANDBY</span><span
+                                        class="contact-rt">45 sec</span></div>
                             </div>
                             <div class="contact-row">
-                                <div class="contact-info"><i class="fa-solid fa-car-burst text-danger"></i> <span>Police</span></div>
-                                <div class="contact-meta"><span class="badge-status status-warn">ON CALL</span><span class="contact-rt">60 sec</span></div>
+                                <div class="contact-info"><i class="fa-solid fa-car-burst text-danger"></i>
+                                    <span>Police</span>
+                                </div>
+                                <div class="contact-meta"><span class="badge-status status-warn">ON CALL</span><span
+                                        class="contact-rt">60 sec</span></div>
                             </div>
                         </div>
 
@@ -635,8 +711,9 @@
                             <h4>Emergency Readiness</h4>
                             <div class="readiness-ring-wrap">
                                 <svg class="readiness-ring" viewBox="0 0 80 80">
-                                    <circle cx="40" cy="40" r="34" class="ring-bg"/>
-                                    <circle cx="40" cy="40" r="34" class="ring-fill-green" stroke-dasharray="0 214" id="readinessRing"/>
+                                    <circle cx="40" cy="40" r="34" class="ring-bg" />
+                                    <circle cx="40" cy="40" r="34" class="ring-fill-green" stroke-dasharray="0 214"
+                                        id="readinessRing" />
                                 </svg>
                                 <div class="readiness-label">
                                     <span class="readiness-pct text-success">99%</span>
@@ -662,7 +739,7 @@
                     <p>Real-time vehicle flow, VIP booking, and autonomous zone management</p>
                 </div>
             </section>
-            
+
             <div class="main-grid">
                 <div class="grid-left" style="flex: 2;">
                     <section class="glass-card premium-parking-map">
@@ -698,71 +775,216 @@
                         </div>
                     </section>
                 </div>
-                </div>
             </div>
-            
-            <!-- Zone Details Container -->
-            <section class="glass-card mt-3 hidden" id="zoneDetailsContainer" style="display: none; margin-top: 2rem;">
-                <div class="panel-header d-flex justify-content-between align-items-center">
-                    <h2><i class="fa-solid fa-magnifying-glass-location neon-text"></i> Zone Details: <span id="activeZoneTitle">None</span></h2>
-                    <button class="icon-btn text-muted" id="closeZoneDetailsBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                
-                <div class="parking-legends mt-2 mb-3 d-flex gap-3 text-small">
-                    <div><span class="legend-box" style="background:var(--success)"></span> Empty Car</div>
-                    <div><span class="legend-box" style="background:#555"></span> Taken Car</div>
-                    <div><span class="legend-box" style="background:var(--info); border-radius:50%"></span> 2-Wheeler</div>
-                    <div><span class="legend-box" style="background:var(--warning)"></span> Cab/Auto</div>
-                </div>
+        </div>
 
-                <div class="zone-grid-details" id="zoneGridDetails">
-                    <!-- JS renders detailed grid here -->
-                </div>
-            </section>
+        <!-- Zone Details Container -->
+        <section class="glass-card mt-3 hidden" id="zoneDetailsContainer" style="display: none; margin-top: 2rem;">
+            <div class="panel-header d-flex justify-content-between align-items-center">
+                <h2><i class="fa-solid fa-magnifying-glass-location neon-text"></i> Zone Details: <span
+                        id="activeZoneTitle">None</span></h2>
+                <button class="icon-btn text-muted" id="closeZoneDetailsBtn" title="Close"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="parking-legends mt-2 mb-3 d-flex gap-3 text-small">
+                <div><span class="legend-box" style="background:var(--success)"></span> Empty Car</div>
+                <div><span class="legend-box" style="background:#555"></span> Taken Car</div>
+                <div><span class="legend-box" style="background:var(--info); border-radius:50%"></span> 2-Wheeler</div>
+                <div><span class="legend-box" style="background:var(--warning)"></span> Cab/Auto</div>
+            </div>
+
+            <div class="zone-grid-details" id="zoneGridDetails">
+                <!-- JS renders detailed grid here -->
+            </div>
+        </section>
         </div>
 
         <!-- Security View -->
-        <div id="view-security" class="view-section hidden">
-            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem;">
+        <div id="view-security" class="view-section hidden soc-container">
+            <!-- Hero Title -->
+            <section class="hero-section glass-card slide-up"
+                style="margin-bottom: 0rem; background: linear-gradient(135deg, rgba(5,8,20,0.8) 0%, rgba(13,19,36,0.9) 100%); border-bottom: 2px solid var(--primary);">
                 <div class="hero-content">
-                    <h1>SECURITY COMMAND CENTER</h1>
-                    <p>Global threat detection, camera feeds, and rapid incident response</p>
+                    <h1 class="neon-text">AI SECURITY OPERATIONS CENTER (SOC)</h1>
+                    <p>Enterprise Command Center — Autonomous Security Patrols, Drone Surveillance & Live Threat
+                        Intelligence</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="online-indicator" style="position: absolute; right: 20px; top: 20px;">
+                        <span class="pulse-dot" style="background-color: var(--danger)"></span> SOC ACTIVE
+                    </div>
                 </div>
             </section>
-            
-            <div class="main-grid">
-                <div class="grid-left" style="flex: 2;">
-                    <section class="glass-card">
-                        <div class="panel-header">
-                            <h2><i class="fa-solid fa-video neon-text"></i> Live Camera Network</h2>
+
+            <!-- 12-Column Dashboard Grid -->
+            <div class="soc-grid-12">
+
+                <!-- ROW 1 / BLOCK 1: Live CCTV Grid Monitor - Spans 6 Columns -->
+                <div class="col-span-6">
+                    <section class="glass-card full-height-card">
+                        <div class="panel-header flex-header">
+                            <h2><i class="fa-solid fa-table-cells neon-text"></i> LIVE CCTV MONITOR (3x4 GRID)</h2>
+                            <div class="cctv-controls">
+                                <span class="badge badge-success"><i class="fa-solid fa-shield-halved"></i> AI
+                                    SCANNING</span>
+                            </div>
                         </div>
-                        <div class="camera-grid" id="securityCameraGrid">
-                            <!-- JS will render video placeholders -->
+                        <div class="cctv-grid-12" id="securityCameraGrid">
+                            <!-- JS Dynamically injects 12 custom CCTV items with interactive features -->
                         </div>
                     </section>
                 </div>
-                <div class="grid-right">
-                    <section class="glass-card">
-                        <div class="panel-header">
-                            <h2><i class="fa-solid fa-list-check neon-text"></i> Incident Log</h2>
+
+                <!-- ROW 1 / BLOCK 2: Secure Digital Twin Map & Personnel - Spans 6 Columns -->
+                <div class="col-span-6">
+                    <section class="glass-card full-height-card relative-card">
+                        <div class="panel-header flex-header">
+                            <h2><i class="fa-solid fa-map-location-dot neon-text"></i> SECURE DIGITAL TWIN MAP</h2>
+                            <div class="map-controls">
+                                <button class="btn-cyber-chip active" id="toggleHeatmapBtn">
+                                    <i class="fa-solid fa-fire"></i> RISK HEATMAP
+                                </button>
+                            </div>
                         </div>
-                        <div class="incident-log" id="incidentLogList">
-                            <!-- JS will render log items -->
+
+                        <!-- Map Container -->
+                        <div class="security-map-wrapper">
+                            <div class="security-map-svg-container" id="securityMapSvgContainer">
+                                <!-- JS will draw the SVG dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Personnel Counters Grid -->
+                        <div class="personnel-counters-grid" id="personnelCountersGrid">
+                            <!-- Generated by JS -->
                         </div>
                     </section>
+                </div>
+
+                <!-- ROW 2 / BLOCK 1: Smart Camera Analytics - Spans 4 Columns -->
+                <div class="col-span-4">
+                    <section class="glass-card full-height-card">
+                        <div class="panel-header">
+                            <h2><i class="fa-solid fa-chart-line neon-text"></i> Smart Camera Analytics</h2>
+                        </div>
+                        <div class="smart-analytics-list" id="smartCameraAnalyticsList">
+                            <!-- Analytics bars populated by JS -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ROW 2 / BLOCK 2: Active Threat Alerts & Incident Timeline - Spans 5 Columns -->
+                <div class="col-span-5">
+                    <div style="display: flex; flex-direction: column; gap: 20px; height: 100%;">
+                        <section class="glass-card alert-panel" style="flex: 1;">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-triangle-exclamation text-danger pulse-icon"></i> ACTIVE AI
+                                    THREATS</h2>
+                            </div>
+                            <div class="active-threats-cards" id="activeThreatsContainer">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+
+                        <section class="glass-card timeline-panel" style="flex: 1;">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-clock neon-text"></i> LIVE INCIDENT TIMELINE</h2>
+                            </div>
+                            <div class="vertical-timeline-container" id="incidentTimelineContainer">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- ROW 2 / BLOCK 3: Emergency Overrides & Telemetry - Spans 3 Columns -->
+                <div class="col-span-3">
+                    <div style="display: flex; flex-direction: column; gap: 20px; height: 100%;">
+                        <section class="glass-card emergency-panel" style="flex: 1.2;">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-shield-halved text-danger"></i> EMERGENCY OVERRIDES</h2>
+                            </div>
+                            <div class="emergency-controls-buttons">
+                                <button class="emerg-control-btn btn-danger" data-action="Lock Stadium"
+                                    data-desc="Lock down all entrance & exit gates immediately?">
+                                    <i class="fa-solid fa-lock"></i> LOCK STADIUM
+                                </button>
+                                <button class="emerg-control-btn btn-success" data-action="Open Emergency Gates"
+                                    data-desc="Open all emergency gates to allow immediate crowd egress?">
+                                    <i class="fa-solid fa-door-open"></i> OPEN EXITS
+                                </button>
+                                <button class="emerg-control-btn btn-warning" data-action="Activate Evacuation"
+                                    data-desc="Initiate fire & security evacuation alerts?">
+                                    <i class="fa-solid fa-person-running"></i> EVACUATE
+                                </button>
+                                <button class="emerg-control-btn btn-primary" data-action="Dispatch Medical"
+                                    data-desc="Deploy additional medical response teams to all zones?">
+                                    <i class="fa-solid fa-kit-medical"></i> DISPATCH MEDICAL
+                                </button>
+                                <button class="emerg-control-btn btn-primary" data-action="Dispatch Police"
+                                    data-desc="Deploy police task forces to security perimeter?">
+                                    <i class="fa-solid fa-user-shield"></i> DISPATCH POLICE
+                                </button>
+                                <button class="emerg-control-btn btn-primary" data-action="Call Fire Team"
+                                    data-desc="Dispatch first responder fire units?">
+                                    <i class="fa-solid fa-fire-extinguisher"></i> FIRE TEAM
+                                </button>
+                                <button class="emerg-control-btn btn-secondary"
+                                    data-action="Trigger Public Announcement"
+                                    data-desc="Broadcast emergency override message to all stadium zones?">
+                                    <i class="fa-solid fa-bullhorn"></i> PUBLIC ANNOUNCE
+                                </button>
+                                <button class="emerg-control-btn btn-secondary" data-action="Emergency Lighting"
+                                    data-desc="Switch stadium power grid to emergency lighting mode?">
+                                    <i class="fa-solid fa-lightbulb"></i> EMERGENCY LIGHTS
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="glass-card metrics-card" style="flex: 1;">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-gauge neon-text"></i> SOC TELEMETRY</h2>
+                            </div>
+                            <div class="soc-metrics-list" id="socMetricsList">
+                                <!-- Metrics generated by JS -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Floating AI Assistant recommendations -->
+            <div class="floating-ai-advisor glass-card" id="floatingAiAdvisor">
+                <div class="advisor-header">
+                    <div class="advisor-title-group">
+                        <i class="fa-solid fa-brain neon-text-cyan pulse-icon"></i>
+                        <h4>AI Recommendations</h4>
+                    </div>
+                    <span class="badge badge-success">ACTIVE</span>
+                </div>
+                <div class="advisor-body" id="advisorRecommendationBody">
+                    <p class="typing-effect-recommendation">Analyzing security telemetries...</p>
                 </div>
             </div>
         </div>
 
         <!-- Crowd Analytics View -->
         <div id="view-crowd" class="view-section hidden">
-            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(20,0,60,0.7) 0%, rgba(40,0,100,0.7) 50%, rgba(0,80,180,0.6) 100%);">
+            <section class="hero-section glass-card slide-up"
+                style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(20,0,60,0.7) 0%, rgba(40,0,100,0.7) 50%, rgba(0,80,180,0.6) 100%);">
                 <div class="hero-content">
                     <h1>CROWD INTELLIGENCE</h1>
                     <p>Real-time crowd flow, demographics, gate pressure &amp; sentiment analysis</p>
                 </div>
                 <div class="hero-visual">
-                    <div class="ai-core-animation"><div class="core-ring outer-ring"></div><div class="core-ring middle-ring"></div><div class="core-ring inner-ring"></div><div class="core-center"><i class="fa-solid fa-users-viewfinder"></i></div></div>
+                    <div class="ai-core-animation">
+                        <div class="core-ring outer-ring"></div>
+                        <div class="core-ring middle-ring"></div>
+                        <div class="core-ring inner-ring"></div>
+                        <div class="core-center"><i class="fa-solid fa-users-viewfinder"></i></div>
+                    </div>
                 </div>
             </section>
 
@@ -836,13 +1058,14 @@
 
         <!-- Weather View -->
         <div id="view-weather" class="view-section hidden">
-            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(2,0,36,0.6) 0%, rgba(9,102,121,0.6) 35%, rgba(0,212,255,0.6) 100%);">
+            <section class="hero-section glass-card slide-up"
+                style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(2,0,36,0.6) 0%, rgba(9,102,121,0.6) 35%, rgba(0,212,255,0.6) 100%);">
                 <div class="hero-content">
                     <h1>METEOROLOGICAL STATION</h1>
                     <p>Hyper-local weather forecasting and event impact analysis</p>
                 </div>
             </section>
-            
+
             <div class="weather-dashboard">
                 <section class="glass-card weather-timeline">
                     <div class="panel-header">
@@ -863,7 +1086,7 @@
                     <p>Live inventory, dynamic pricing, and seat allocation management</p>
                 </div>
             </section>
-            
+
             <div class="main-grid">
                 <div class="grid-left" style="flex: 2;">
                     <section class="glass-card">
@@ -884,7 +1107,7 @@
                             <!-- JS generates pricing -->
                         </div>
                     </section>
-                    
+
                     <section class="glass-card mt-3" id="bookingCheckoutPanel" style="display: none;">
                         <div class="panel-header">
                             <h2><i class="fa-solid fa-cart-shopping neon-text"></i> Booking Summary</h2>
@@ -898,7 +1121,8 @@
                                 <span>Total Price:</span>
                                 <strong id="totalPrice" class="text-success">₹0</strong>
                             </div>
-                            <button class="btn btn-primary w-100 ripple-btn" id="confirmBookingBtn">Confirm Booking</button>
+                            <button class="btn btn-primary w-100 ripple-btn" id="confirmBookingBtn">Confirm
+                                Booking</button>
                         </div>
                     </section>
                 </div>
@@ -930,7 +1154,7 @@
 
     <!-- Advanced AI Stadium Copilot -->
     <div class="ai-copilot-overlay hidden" id="aiCopilotOverlay"></div>
-    
+
     <div class="ai-copilot-container glass-card hidden" id="aiCopilotContainer">
         <!-- Main Chat Area -->
         <div class="ai-copilot-main">
@@ -938,7 +1162,8 @@
             <div class="ai-copilot-header">
                 <div class="header-left-group">
                     <div class="ai-avatar-container pulse-ring">
-                        <img src="https://ui-avatars.com/api/?name=AI&background=00E5FF&color=000&rounded=true" alt="AI Copilot" id="aiAvatarImage">
+                        <img src="https://ui-avatars.com/api/?name=AI&background=00E5FF&color=000&rounded=true"
+                            alt="AI Copilot" id="aiAvatarImage">
                         <span class="status-dot online"></span>
                     </div>
                     <div class="ai-header-titles">
@@ -970,10 +1195,14 @@
                             <option value="ja">JA</option>
                         </select>
                     </div>
-                    <button class="icon-btn ai-action-btn" id="aiClearChatBtn" title="Clear Chat"><i class="fa-solid fa-trash-can"></i></button>
-                    <button class="icon-btn ai-action-btn" id="aiExportBtn" title="Export PDF Report"><i class="fa-solid fa-file-pdf"></i></button>
-                    <button class="icon-btn ai-action-btn" id="aiExpandBtn" title="Toggle Fullscreen"><i class="fa-solid fa-expand"></i></button>
-                    <button class="icon-btn ai-action-btn" id="aiCloseBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiClearChatBtn" title="Clear Chat"><i
+                            class="fa-solid fa-trash-can"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiExportBtn" title="Export PDF Report"><i
+                            class="fa-solid fa-file-pdf"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiExpandBtn" title="Toggle Fullscreen"><i
+                            class="fa-solid fa-expand"></i></button>
+                    <button class="icon-btn ai-action-btn" id="aiCloseBtn" title="Close"><i
+                            class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
 
@@ -983,7 +1212,9 @@
                 <div class="ai-chat-bubble ai-system-msg slide-up">
                     <div class="bubble-avatar"><i class="fa-solid fa-robot"></i></div>
                     <div class="bubble-content">
-                        <p>Systems online. I am your <strong>AI Stadium Copilot</strong>. I am currently operating in <span class="neon-text-cyan" id="currentPersonaDisplay">Organizer Assistant</span> mode.</p>
+                        <p>Systems online. I am your <strong>AI Stadium Copilot</strong>. I am currently operating in
+                            <span class="neon-text-cyan" id="currentPersonaDisplay">Organizer Assistant</span> mode.
+                        </p>
                         <p>How can I assist you with the stadium operations today?</p>
                     </div>
                 </div>
@@ -1004,14 +1235,20 @@
             <!-- Input Area -->
             <div class="ai-copilot-footer">
                 <div class="ai-input-wrapper">
-                    <button class="icon-btn voice-btn" id="aiVoiceBtn" title="Voice Input"><i class="fa-solid fa-microphone"></i></button>
-                    <input type="text" id="aiChatInput" placeholder="Enter command or ask a question (e.g., 'Open emergency mode')..." class="cyber-input" autocomplete="off">
+                    <button class="icon-btn voice-btn" id="aiVoiceBtn" title="Voice Input"><i
+                            class="fa-solid fa-microphone"></i></button>
+                    <input type="text" id="aiChatInput"
+                        placeholder="Enter command or ask a question (e.g., 'Open emergency mode')..."
+                        class="cyber-input" autocomplete="off">
                     <button class="icon-btn send-btn" id="aiSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
                 <div class="accessibility-toggles">
-                    <button class="text-btn text-small" id="toggleHighContrast"><i class="fa-solid fa-circle-half-stroke"></i> High Contrast</button>
-                    <button class="text-btn text-small" id="toggleLargeText"><i class="fa-solid fa-text-height"></i> Large Text</button>
-                    <button class="text-btn text-small disabled" title="Coming Soon"><i class="fa-solid fa-hands"></i> Sign Language</button>
+                    <button class="text-btn text-small" id="toggleHighContrast"><i
+                            class="fa-solid fa-circle-half-stroke"></i> High Contrast</button>
+                    <button class="text-btn text-small" id="toggleLargeText"><i class="fa-solid fa-text-height"></i>
+                        Large Text</button>
+                    <button class="text-btn text-small disabled" title="Coming Soon"><i class="fa-solid fa-hands"></i>
+                        Sign Language</button>
                 </div>
             </div>
         </div>
@@ -1021,7 +1258,7 @@
             <div class="side-panel-header">
                 <h4><i class="fa-solid fa-satellite-dish pulse-icon"></i> Live AI Insights</h4>
             </div>
-            
+
             <div class="insight-cards-container">
                 <!-- Risk Card -->
                 <div class="insight-card cyber-border">
@@ -1044,7 +1281,8 @@
                     <div class="insight-recommendation highlight-box">
                         <i class="fa-solid fa-lightbulb text-info"></i>
                         <span><strong>Recommendation:</strong> Open Parking P3</span>
-                        <button class="btn btn-sm btn-outline-cyan execute-action-btn" data-action="Open Parking P3">Execute</button>
+                        <button class="btn btn-sm btn-outline-cyan execute-action-btn"
+                            data-action="Open Parking P3">Execute</button>
                     </div>
                 </div>
 
@@ -1057,7 +1295,8 @@
                     <div class="insight-recommendation highlight-box">
                         <i class="fa-solid fa-lightbulb text-info"></i>
                         <span><strong>Recommendation:</strong> Open Counter 6</span>
-                        <button class="btn btn-sm btn-outline-cyan execute-action-btn" data-action="Open Counter 6">Execute</button>
+                        <button class="btn btn-sm btn-outline-cyan execute-action-btn"
+                            data-action="Open Counter 6">Execute</button>
                     </div>
                 </div>
 
@@ -1071,17 +1310,24 @@
                     <div class="insight-recommendation highlight-box">
                         <i class="fa-solid fa-lightbulb text-info"></i>
                         <span><strong>Recommendation:</strong> Open Covered Waiting Area</span>
-                        <button class="btn btn-sm btn-outline-cyan execute-action-btn" data-action="Open Covered Area">Execute</button>
+                        <button class="btn btn-sm btn-outline-cyan execute-action-btn"
+                            data-action="Open Covered Area">Execute</button>
                     </div>
                 </div>
-                
+
                 <!-- Quick Actions / Pinned Commands -->
                 <div class="pinned-commands mt-3">
                     <h5 class="section-subtitle">Pinned Commands</h5>
                     <div class="command-grid">
-                        <button class="btn-cyber-chip" onclick="document.getElementById('aiChatInput').value='Show live incidents'; document.getElementById('aiSendBtn').click();"><i class="fa-solid fa-video"></i> Live Incidents</button>
-                        <button class="btn-cyber-chip text-danger" onclick="document.getElementById('aiChatInput').value='Activate emergency mode'; document.getElementById('aiSendBtn').click();"><i class="fa-solid fa-triangle-exclamation"></i> Emergency Mode</button>
-                        <button class="btn-cyber-chip" onclick="document.getElementById('aiChatInput').value='Generate executive report'; document.getElementById('aiSendBtn').click();"><i class="fa-solid fa-file-lines"></i> Executive Report</button>
+                        <button class="btn-cyber-chip"
+                            onclick="document.getElementById('aiChatInput').value='Show live incidents'; document.getElementById('aiSendBtn').click();"><i
+                                class="fa-solid fa-video"></i> Live Incidents</button>
+                        <button class="btn-cyber-chip text-danger"
+                            onclick="document.getElementById('aiChatInput').value='Activate emergency mode'; document.getElementById('aiSendBtn').click();"><i
+                                class="fa-solid fa-triangle-exclamation"></i> Emergency Mode</button>
+                        <button class="btn-cyber-chip"
+                            onclick="document.getElementById('aiChatInput').value='Generate executive report'; document.getElementById('aiSendBtn').click();"><i
+                                class="fa-solid fa-file-lines"></i> Executive Report</button>
                     </div>
                 </div>
             </div>
@@ -1097,4 +1343,5 @@
     <!-- Custom Script -->
     <script src="script.js"></script>
 </body>
+
 </html>

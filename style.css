@@ -2353,3 +2353,1029 @@ body.large-text .insight-value {
 .badge-success { background: rgba(0, 255, 136, 0.2); color: var(--success); }
 .badge-warning { background: rgba(255, 190, 11, 0.2); color: var(--warning); }
 .badge-danger  { background: rgba(255, 61, 87, 0.2); color: var(--danger); }
+
+/* ==========================================================================
+   AI Security Command Center (SOC) Styles
+   ========================================================================== */
+
+/* SOC Container — prevents overlap with sticky topbar */
+.soc-container {
+    padding: 28px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 12-Column SOC Dashboard Grid */
+.soc-grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    align-items: start;
+    width: 100%;
+}
+
+/* Column span utilities */
+.col-span-12 { grid-column: span 12; }
+.col-span-8  { grid-column: span 8; }
+.col-span-7  { grid-column: span 7; }
+.col-span-6  { grid-column: span 6; }
+.col-span-5  { grid-column: span 5; }
+.col-span-4  { grid-column: span 4; }
+.col-span-3  { grid-column: span 3; }
+.col-span-2  { grid-column: span 2; }
+
+@media (max-width: 1600px) {
+    .col-span-6  { grid-column: span 12; }
+    .col-span-4  { grid-column: span 6; }
+    .col-span-5  { grid-column: span 12; }
+    .col-span-3  { grid-column: span 6; }
+}
+
+@media (max-width: 1024px) {
+    .soc-grid-12 {
+        grid-template-columns: 1fr;
+    }
+    .col-span-6, .col-span-5, .col-span-4,
+    .col-span-3, .col-span-7, .col-span-8,
+    .col-span-2 { grid-column: span 1; }
+}
+
+/* Common Card Rules */
+.full-height-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.relative-card {
+    position: relative;
+}
+
+/* CCTV 12-Camera Grid */
+.cctv-grid-12 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .cctv-grid-12 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .cctv-grid-12 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Camera Card */
+.cam-feed-item {
+    background: #02050e;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition);
+}
+
+.cam-feed-item.selected-focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+    z-index: 10;
+}
+
+.cam-feed-item.fullscreen-cctv {
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    z-index: 9999;
+    border-color: var(--primary);
+    box-shadow: 0 0 40px var(--primary-glow);
+}
+
+.cam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(13, 19, 36, 0.9);
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.72rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    z-index: 5;
+}
+
+.cam-id {
+    color: var(--primary);
+}
+
+.cam-rec-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--danger);
+}
+
+.cam-rec-status.rec-active::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--danger);
+    border-radius: 50%;
+    animation: blink-bright 1s infinite;
+}
+
+/* Live Video Simulation Box */
+.cam-video-screen {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: #050b16;
+    overflow: hidden;
+}
+
+.cam-feed-item.fullscreen-cctv .cam-video-screen {
+    aspect-ratio: auto;
+    height: calc(100% - 60px);
+}
+
+/* Scanlines & Visual Artifacts Overlays */
+.cctv-overlay-scanlines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    ), linear-gradient(
+        90deg, 
+        rgba(255, 0, 0, 0.06), 
+        rgba(0, 255, 0, 0.02), 
+        rgba(0, 0, 255, 0.06)
+    );
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.cctv-overlay-noise {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.85;
+}
+
+.cctv-overlay-nightvision {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.5) 100%), rgba(0, 229, 255, 0.08);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cam-feed-item.nightvision-mode .cctv-overlay-nightvision {
+    background: radial-gradient(circle, transparent 30%, rgba(0, 40, 10, 0.6) 100%), rgba(0, 255, 100, 0.15);
+}
+
+.cctv-overlay-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 1px solid rgba(0, 229, 255, 0.08);
+    background: 
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Simulated Security Scenes inside feeds */
+.cctv-scene {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+}
+
+.cctv-scene-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4) contrast(1.2);
+}
+
+/* SVG Silhouettes & Bounding Boxes in cameras */
+.cctv-visuals-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    z-index: 4;
+}
+
+/* Thermal Vision Overlay */
+.cctv-overlay-thermal {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(255, 60, 0, 0.12) 0%,
+        rgba(255, 120, 0, 0.08) 30%,
+        rgba(0, 80, 255, 0.08) 70%,
+        rgba(0, 30, 120, 0.12) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+    display: none;
+}
+
+.cam-feed-item.thermal-mode .cctv-overlay-thermal { display: block; }
+.cam-feed-item.thermal-mode .cctv-overlay-nightvision { display: none; }
+.cam-feed-item.thermal-mode .cam-video-screen { filter: sepia(0.3) hue-rotate(10deg) saturate(1.4); }
+.cam-feed-item.nightvision-mode .cam-video-screen { filter: brightness(1.2) saturate(0.2) hue-rotate(80deg); }
+
+/* Camera Footer controls */
+.cam-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(9, 15, 28, 0.97);
+    padding: 5px 10px;
+    font-size: 0.65rem;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(0, 229, 255, 0.07);
+}
+
+.cam-meta-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cam-meta-stats {
+    display: flex;
+    gap: 8px;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+}
+
+.cam-stat-chip {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.cam-stat-chip.good { color: var(--success); border-color: rgba(0,255,136,0.2); }
+.cam-stat-chip.warn { color: var(--warning); border-color: rgba(255,193,7,0.2); }
+.cam-stat-chip.crit { color: var(--danger); border-color: rgba(255,61,113,0.2); }
+.cam-stat-chip.info { color: var(--primary); border-color: rgba(0,229,255,0.2); }
+
+.cam-badge-ai {
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    background: rgba(0, 229, 255, 0.15);
+    color: var(--primary);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.cam-badge-ai.alert-active {
+    background: rgba(255, 61, 113, 0.2);
+    color: var(--danger);
+    border-color: rgba(255, 61, 113, 0.5);
+    animation: alert-pulse 1s infinite alternate;
+}
+
+.cam-meta-right {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.cam-action-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    cursor: pointer;
+    transition: var(--transition);
+    padding: 3px 6px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.cam-action-btn:hover {
+    color: var(--primary);
+    border-color: rgba(0,229,255,0.3);
+    background: rgba(0,229,255,0.06);
+}
+
+.cam-action-btn.snap-btn:active {
+    background: rgba(255,255,255,0.8);
+    border-color: #fff;
+    color: #000;
+}
+
+/* Snapshot flash animation */
+@keyframes snapshot-flash {
+    0%   { box-shadow: inset 0 0 0 0 rgba(255,255,255,0); }
+    30%  { box-shadow: inset 0 0 0 4px rgba(255,255,255,0.9); }
+    100% { box-shadow: inset 0 0 0 0 rgba(255,255,255,0); }
+}
+
+.cam-feed-item.snap-flash {
+    animation: snapshot-flash 0.4s ease-out;
+}
+
+/* CCTV AI Detection Hover Overlay */
+.cctv-ai-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(4, 9, 20, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0, 229, 255, 0.15);
+    padding: 6px 8px;
+    z-index: 10;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    pointer-events: none;
+}
+
+.cam-feed-item:hover .cctv-ai-overlay {
+    transform: translateY(0);
+}
+
+.cctv-ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 10px;
+}
+
+.cctv-ai-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.56rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+}
+
+.cctv-ai-stat .ai-pct-high { color: var(--success); }
+.cctv-ai-stat .ai-pct-mid  { color: var(--warning); }
+.cctv-ai-stat .ai-pct-low  { color: var(--text-muted); }
+.cctv-ai-stat .ai-pct-alert { color: var(--danger); }
+
+/* Active Threat panel styles */
+.alert-panel {
+    border-left: 4px solid var(--danger);
+    max-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+.active-threats-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 4px;
+}
+
+/* Threat Cards */
+.threat-card {
+    background: rgba(255, 61, 113, 0.04);
+    border: 1px solid rgba(255, 61, 113, 0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    position: relative;
+    transition: var(--transition);
+    animation: slideIn 0.3s ease;
+}
+
+.threat-card:hover {
+    background: rgba(255, 61, 113, 0.08);
+    border-color: var(--danger);
+    box-shadow: 0 0 10px rgba(255, 61, 113, 0.2);
+}
+
+.threat-card.critical {
+    background: rgba(255, 61, 113, 0.08);
+    border-left: 3px solid var(--danger);
+}
+
+.threat-card.warning {
+    background: rgba(255, 193, 7, 0.05);
+    border-color: rgba(255, 193, 7, 0.2);
+    border-left: 3px solid var(--warning);
+}
+
+.threat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.threat-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--danger);
+}
+
+.threat-card.warning .threat-label {
+    color: var(--warning);
+}
+
+.threat-confidence {
+    font-size: 0.72rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+}
+
+.threat-details {
+    font-size: 0.78rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.threat-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 6px;
+}
+
+.threat-reco {
+    color: var(--primary);
+    margin-top: 4px;
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+/* Timeline Panel */
+.timeline-panel {
+    max-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+.vertical-timeline-container {
+    position: relative;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-y: auto;
+    flex: 1;
+    margin-left: 10px;
+    padding-right: 4px;
+}
+
+/* Timeline Node */
+.timeline-node {
+    position: relative;
+    margin-bottom: 16px;
+    animation: fadeIn 0.4s ease;
+    cursor: pointer;
+}
+
+.timeline-node::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 4px;
+    width: 9px;
+    height: 9px;
+    background: #0d1324;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    z-index: 2;
+    transition: var(--transition);
+}
+
+.timeline-node:hover::before {
+    background: var(--primary);
+    box-shadow: 0 0 8px var(--primary);
+    transform: scale(1.3);
+}
+
+.timeline-node.active::before {
+    border-color: var(--danger);
+    background: var(--danger);
+    box-shadow: 0 0 8px var(--danger);
+}
+
+.timeline-node.resolved::before {
+    border-color: var(--success);
+    background: var(--success);
+}
+
+.timeline-time {
+    font-size: 0.72rem;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.timeline-node.active .timeline-time {
+    color: var(--danger);
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: 4px;
+    transition: var(--transition);
+}
+
+.timeline-node:hover .timeline-content {
+    border-color: rgba(0, 229, 255, 0.2);
+    background: rgba(0, 229, 255, 0.02);
+}
+
+.timeline-desc {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.timeline-status {
+    display: inline-block;
+    font-size: 0.64rem;
+    margin-top: 4px;
+    padding: 0px 4px;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+.timeline-status.status-active {
+    background: rgba(255, 61, 113, 0.15);
+    color: var(--danger);
+}
+
+.timeline-status.status-resolved {
+    background: rgba(0, 255, 136, 0.15);
+    color: var(--success);
+}
+
+/* Security Map Styling */
+.security-map-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #02050d;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.security-map-svg-container {
+    width: 100%;
+    height: 100%;
+}
+
+.security-map-svg-container svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Heatmap pulse overlay */
+.heatmap-risk-ring {
+    animation: radial-pulse 4s infinite ease-in-out;
+}
+
+@keyframes radial-pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.65; }
+    100% { opacity: 0.3; }
+}
+
+/* Map Node States */
+.map-camera-node {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.map-camera-node:hover {
+    filter: drop-shadow(0 0 8px var(--primary));
+}
+
+.map-camera-node.alert-active {
+    animation: map-alert-pulse 1s infinite alternate;
+}
+
+.map-gate-node {
+    font-size: 8px;
+    font-weight: bold;
+    fill: #fff;
+    cursor: pointer;
+}
+
+.map-exit-node {
+    animation: map-blink 1s infinite alternate;
+}
+
+/* Live moving security assets style */
+.patrol-drone {
+    transition: all 1s linear;
+}
+
+.patrol-guard {
+    transition: all 1.5s linear;
+}
+
+.emergency-vehicle {
+    transition: all 1.2s linear;
+}
+
+/* Personnel tracking counters */
+.personnel-counters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+@media (max-width: 480px) {
+    .personnel-counters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.personnel-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.personnel-icon-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.personnel-item.active .personnel-icon-wrap {
+    animation: pulse-ring-glow 2s infinite;
+}
+
+.personnel-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.personnel-label {
+    font-size: 0.64rem;
+    color: var(--text-muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+}
+
+.personnel-val {
+    font-size: 1rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #fff;
+}
+
+.personnel-val.live-count {
+    color: var(--primary);
+}
+
+/* Smart Analytics list */
+.smart-analytics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.analytics-bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.analytics-bar-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    font-weight: 600;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.progress-track-soc {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-fill-soc {
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    position: relative;
+    transition: width 1s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.progress-fill-soc.glow-bar-cyan {
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.progress-fill-soc.glow-bar-magenta {
+    background: var(--danger);
+    box-shadow: 0 0 10px rgba(255, 61, 113, 0.5);
+}
+
+.progress-fill-soc.glow-bar-green {
+    background: var(--success);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.progress-fill-soc.glow-bar-yellow {
+    background: var(--warning);
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+/* Emergency overrides buttons container */
+.emergency-controls-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.emerg-control-btn {
+    border: 1px solid var(--border-color);
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.76rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.emerg-control-btn.btn-danger {
+    background: rgba(255, 61, 113, 0.1);
+    color: var(--danger);
+    border-color: rgba(255, 61, 113, 0.3);
+}
+
+.emerg-control-btn.btn-danger:hover {
+    background: var(--danger);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(255, 61, 113, 0.4);
+}
+
+.emerg-control-btn.btn-success {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--success);
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+.emerg-control-btn.btn-success:hover {
+    background: var(--success);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.emerg-control-btn.btn-warning {
+    background: rgba(255, 193, 7, 0.1);
+    color: var(--warning);
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+.emerg-control-btn.btn-warning:hover {
+    background: var(--warning);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.4);
+}
+
+.emerg-control-btn.btn-primary {
+    background: rgba(0, 229, 255, 0.1);
+    color: var(--primary);
+    border-color: rgba(0, 229, 255, 0.3);
+}
+
+.emerg-control-btn.btn-primary:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.emerg-control-btn.btn-secondary {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-main);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.emerg-control-btn.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+/* SOC Telemetry metrics layout */
+.soc-metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.soc-metric-row {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.soc-metric-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.soc-metric-lbl {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+}
+
+.soc-metric-val {
+    font-size: 1.1rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 2px;
+}
+
+/* Floating AI Recommendations assistant bubble styling */
+.floating-ai-advisor {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 320px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    animation: float-advisor 4s infinite ease-in-out;
+}
+
+.advisor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.advisor-title-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.advisor-title-group h4 {
+    font-size: 0.8rem;
+    margin: 0;
+    color: var(--primary);
+}
+
+.advisor-body {
+    font-size: 0.78rem;
+    color: var(--text-main);
+    line-height: 1.4;
+    min-height: 40px;
+}
+
+/* Alert Siren visual state triggers */
+body.soc-emergency-active {
+    animation: soc-siren 4s infinite;
+}
+
+body.soc-emergency-active .sidebar,
+body.soc-emergency-active .topbar {
+    border-bottom: 2px solid var(--danger) !important;
+}
+
+@keyframes soc-siren {
+    0% { background-color: #050814; }
+    50% { background-color: #21040a; }
+    100% { background-color: #050814; }
+}
+
+/* Timeline/Map Highlighting animation keyframes */
+@keyframes map-alert-pulse {
+    0% { filter: drop-shadow(0 0 2px var(--danger)); fill: var(--danger); opacity: 0.6; }
+    100% { filter: drop-shadow(0 0 12px var(--danger)); fill: var(--danger); opacity: 1; }
+}
+
+@keyframes map-blink {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+@keyframes alert-pulse {
+    0% { box-shadow: 0 0 4px rgba(255, 61, 113, 0.2); }
+    100% { box-shadow: 0 0 12px rgba(255, 61, 113, 0.6); }
+}
+
+@keyframes float-advisor {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-ring-glow {
+    0% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(0, 229, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+}
+
+.login-screen{
+    position:fixed;
+    inset:0;
+    background:#0b1220;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+.login-card{
+    width:350px;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+}
+
+.login-card input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+}
+
+.login-card button{
+    width:100%;
+    padding:12px;
+    cursor:pointer;
+}
