@@ -1,15 +1,17 @@
 <div align="center">
 
 # 🏟️ StadiumOS AI
+
 ### AI-Powered Smart Stadium Operating System
 
 *Transforming Stadium Operations with Artificial Intelligence, Real-Time Analytics, and Intelligent Automation.*
 
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript)
+![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js)
+![Express.js](https://img.shields.io/badge/Express.js-Backend-black?style=for-the-badge&logo=express)
+![GitHub Actions](https://github.com/nensi25/stadium-os-ai/actions/workflows/test.yml/badge.svg)
 
 ---
 
@@ -23,104 +25,64 @@
 
 # 📖 Overview
 
-**StadiumOS AI** is a modern smart stadium management platform designed to centralize stadium operations into a single intelligent dashboard.
+**StadiumOS AI** is an AI-inspired smart stadium management platform that centralizes stadium operations into one intelligent dashboard.
 
-The application demonstrates how AI-inspired dashboards and real-time analytics can help stadium operators monitor visitors, crowd flow, parking availability, ticketing, security events, weather conditions, and operational metrics through an intuitive interface.
+The platform demonstrates how modern web technologies and backend APIs can be used to monitor stadium operations, crowd movement, parking availability, ticket management, weather conditions, and security alerts through a responsive dashboard.
 
 ---
 
-# ✨ Key Features
+# ✨ Features
 
-## 📊 AI Operations Dashboard
-
-- Live stadium overview
-- Visitor statistics
-- Revenue insights
-- Occupancy monitoring
-- Food order analytics
+## 📊 Dashboard
+- Live Stadium Statistics
+- Revenue Analytics
+- Occupancy Monitoring
+- Visitor Insights
 - Operational KPIs
-- AI report generation
-
----
+- AI Dashboard Interface
 
 ## 👥 Crowd Intelligence
+- Crowd Density Monitoring
+- Entry & Exit Tracking
+- Attendance Analytics
+- Zone Occupancy
+- Live Crowd Insights
 
-- Live crowd monitoring
-- Attendance analytics
-- Entry & exit tracking
-- Crowd density visualization
-- Sentiment indicators
-- Demographic insights
-- Gate pressure analysis
-- Zone occupancy
-
----
-
-## 🛡 Security Command Center
-
-- Security dashboard
-- Camera monitoring layout
-- Incident timeline
-- Threat notifications
-- Security activity feed
-- Alert management
-
----
+## 🛡 Security Center
+- Incident Monitoring
+- Security Alerts
+- Camera Dashboard Layout
+- Threat Notifications
 
 ## 🚗 Smart Parking
+- Parking Availability
+- Zone Management
+- VIP Parking
+- Live Capacity Status
 
-- Interactive parking map
-- Zone-based parking
-- Live capacity monitoring
-- VIP parking
-- Vehicle distribution
-- Parking availability
-
----
-
-## 🎟 Smart Ticketing
-
-- Live seat availability
-- Premium seating
-- VIP booking
-- Dynamic pricing interface
-- Seat allocation map
-
----
+## 🎟 Ticket Management
+- Seat Availability
+- VIP Booking
+- Ticket Dashboard
+- Seating Visualization
 
 ## 🌦 Weather Intelligence
-
-- Hourly forecast
-- Weekly forecast
-- Rain probability
-- Wind monitoring
-- Event impact analysis
-- Stadium weather insights
+- Weather Forecast
+- Rain Prediction
+- Wind Speed
+- Stadium Weather Updates
 
 ---
 
-# 🧠 AI Concepts Demonstrated
+# 🧠 AI Concepts
 
-- Smart Dashboard Design
-- Predictive Stadium Monitoring
-- Crowd Intelligence Visualization
-- Decision Support Interfaces
-- Security Monitoring Dashboard
-- Real-Time Data Visualization
-- Operational Analytics
-
----
-
-# 🖥 User Interface Highlights
-
-- Modern futuristic UI
-- Glassmorphism design
-- Cyber-inspired theme
-- Interactive dashboard cards
-- Live status indicators
-- Responsive layout
-- Smooth transitions
-- Professional admin experience
+- AI Dashboard
+- Predictive Analytics
+- Smart Stadium Monitoring
+- Crowd Intelligence
+- Decision Support Interface
+- Real-Time Analytics
+- Operational Insights
 
 ---
 
@@ -128,32 +90,37 @@ The application demonstrates how AI-inspired dashboards and real-time analytics 
 
 | Technology | Purpose |
 |------------|----------|
-| React | Frontend |
-| Vite | Development Environment |
-| JavaScript | Application Logic |
-| HTML5 | Structure |
+| HTML5 | Frontend Structure |
 | CSS3 | Styling |
-| Responsive Design | Multi-device Support |
+| JavaScript (ES6) | Client-side Logic |
+| Node.js | Runtime Environment |
+| Express.js | Backend APIs |
+| Jest | Unit Testing |
+| Supertest | API Testing |
+| GitHub Actions | Continuous Integration |
 
 ---
 
-# 📂 Folder Structure
+# 📂 Project Structure
 
 ```text
 stadium-os-ai
 │
-├── public
+├── backend
+│   ├── tests
+│   │   └── server.test.js
+│   ├── package.json
+│   └── server.js
 │
-├── src
-│   ├── assets
-│   ├── components
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── styles
+├── css
+├── js
+├── images
+├── .github
+│   └── workflows
+│       └── test.yml
 │
 ├── index.html
 ├── package.json
-├── vite.config.js
 └── README.md
 ```
 
@@ -173,99 +140,118 @@ Move into the project
 cd stadium-os-ai
 ```
 
-Install dependencies
+Install backend dependencies
 
 ```bash
+cd backend
 npm install
 ```
 
-Start the development server
+Start the backend server
 
 ```bash
-npm run dev
+npm start
 ```
 
-Build for production
+Run backend tests
 
 ```bash
-npm run build
+npm test
 ```
 
 ---
 
-# 📸 Project Screenshots
+# ✅ Automated Testing
 
-## 🏠 AI Dashboard
+This project includes automated backend API testing using:
 
-![Dashboard](image1.png)
+- Jest
+- Supertest
+- GitHub Actions
 
----
-
-## 👥 Crowd Intelligence
-
-![Crowd Intelligence](image2.png)
+Every push to the **main** branch automatically runs the test suite.
 
 ---
 
-## 🛡 Security Command Center
+# 📸 Screenshots
 
-![Security](image3.png)
+Add your screenshots inside a folder named:
+
+```
+screenshots/
+```
+
+Example:
+
+```
+screenshots/dashboard.png
+screenshots/security.png
+screenshots/parking.png
+screenshots/weather.png
+```
+
+Then use:
+
+```md
+![Dashboard](screenshots/dashboard.png)
+
+![Security](screenshots/security.png)
+
+![Parking](screenshots/parking.png)
+
+![Weather](screenshots/weather.png)
+```
 
 ---
 
-## 🚗 Smart Parking & Ticketing
-
-![Parking](image4.png)
-
----
-
-# 💡 Future Scope
+# 💡 Future Improvements
 
 - AI Chat Assistant
-- Computer Vision Crowd Detection
-- Face Recognition Entry
+- Face Recognition
+- Computer Vision
 - IoT Sensor Integration
 - Digital Twin Stadium
 - Emergency Alert Automation
+- Predictive Maintenance
 - Mobile Application
 - Cloud Deployment
-- Predictive Maintenance
-- AI Event Recommendation Engine
 
 ---
 
 # 🎯 Use Cases
 
 - Sports Stadiums
-- Cricket Grounds
 - Football Arenas
+- Cricket Stadiums
 - Concert Venues
+- Smart Cities
 - Exhibition Centers
 - Convention Halls
-- Smart City Projects
-- Large Public Events
+- Public Events
 
 ---
 
 # 📈 Project Highlights
 
-✅ Modern Admin Dashboard
-
-✅ AI-inspired Stadium Operations
-
 ✅ Responsive Design
 
-✅ Interactive Analytics
+✅ AI-inspired Dashboard
 
-✅ Smart Parking Visualization
+✅ Express.js Backend
 
-✅ Ticket Management Interface
+✅ REST API
 
-✅ Security Monitoring
+✅ Automated Testing
+
+✅ GitHub Actions CI
+
+✅ Smart Parking
+
+✅ Security Dashboard
 
 ✅ Weather Intelligence
 
-✅ Professional UI/UX
+✅ Crowd Analytics
 
 ---
 
@@ -275,10 +261,10 @@ npm run build
 
 **B.Tech Computer Engineering**
 
-### Connect with me
+### Connect
 
-- 🔗 GitHub: https://github.com/nensi25
-- 💼 LinkedIn: https://www.linkedin.com/in/nensi-gohel-765935328/
+- GitHub: https://github.com/nensi25
+- LinkedIn: https://www.linkedin.com/in/nensi-gohel-765935328/
 
 ---
 
@@ -294,9 +280,7 @@ Feel free to fork the repository and submit a Pull Request.
 
 If you found this project useful,
 
-⭐ **Star this repository**
-
-It helps others discover the project and supports future improvements.
+⭐ Star this repository.
 
 ---
 
