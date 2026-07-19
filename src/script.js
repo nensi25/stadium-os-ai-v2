@@ -26,33 +26,185 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Active nav item & SPA Routing
     const navItems = document.querySelectorAll('.nav-links a');
-    const viewSections = document.querySelectorAll('.view-section');
+    
+    window.switchToView = function (targetView) {
+        if (!targetView) return;
 
-    navItems.forEach(item => {
-        item.addEventListener('click', function (e) {
-            e.preventDefault();
+        // Remove active class from all nav list items
+        document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
 
-            // Remove active from all nav items
-            document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
-
-            // Add active to current
-            this.parentElement.classList.add('active');
-
-            // Routing
-            const targetView = this.getAttribute('data-view');
-            if (targetView) {
-                viewSections.forEach(sec => {
-                    sec.classList.remove('active');
-                    sec.classList.add('hidden');
-                });
-
-                const activeSec = document.getElementById('view-' + targetView);
-                if (activeSec) {
-                    activeSec.classList.remove('hidden');
-                    activeSec.classList.add('active');
-                }
+        // Highlight the matched sidebar link if it exists
+        navItems.forEach(item => {
+            if (item.getAttribute('data-view') === targetView) {
+                item.parentElement.classList.add('active');
             }
         });
+
+        // Toggle visibility of all view sections
+        const viewSections = document.querySelectorAll('.view-section');
+        viewSections.forEach(sec => {
+            sec.classList.remove('active');
+            sec.classList.add('hidden');
+        });
+
+        const activeSec = document.getElementById('view-' + targetView);
+        if (activeSec) {
+            activeSec.classList.remove('hidden');
+            activeSec.classList.add('active');
+        }
+    };
+
+    // Listen for click events on elements with data-view attribute (e.g. sidebar, profile dropdown, quick-actions)
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('[data-view]');
+        if (trigger) {
+            e.preventDefault();
+            const targetView = trigger.getAttribute('data-view');
+            window.switchToView(targetView);
+        }
+    });
+
+    // STADIUMOS SETTINGS PERSISTENCE INTEGRATION
+    function applySavedSettings() {
+        try {
+            const data = localStorage.getItem('stadium_os_settings');
+            if (!data) return;
+            const s = JSON.parse(data);
+            const root = document.documentElement;
+            const body = document.body;
+
+            // 1. Theme Selection
+            if (s.theme) {
+                const THEME_CLASSES = ['dark-theme', 'light-theme', 'cyber-blue-theme', 'neon-purple-theme', 'emerald-green-theme', 'orange-theme'];
+                THEME_CLASSES.forEach(c => {
+                    body.classList.remove(c);
+                    root.classList.remove(c);
+                });
+                body.classList.add(s.theme);
+                root.classList.add(s.theme);
+            }
+
+            // 2. Accent Color Selection
+            if (s.accent) {
+                const ACCENTS_MAP = {
+                    blue: { primary: '#00B8FF', glow: 'rgba(0, 184, 255, 0.35)', secondary: '#0088FF' },
+                    green: { primary: '#00FF99', glow: 'rgba(0, 255, 153, 0.35)', secondary: '#00CC7A' },
+                    purple: { primary: '#BD00FF', glow: 'rgba(189, 0, 255, 0.35)', secondary: '#9900CC' },
+                    red: { primary: '#FF3D71', glow: 'rgba(255, 61, 113, 0.35)', secondary: '#E02956' },
+                    orange: { primary: '#FF9F00', glow: 'rgba(255, 159, 0, 0.35)', secondary: '#D68500' },
+                    cyan: { primary: '#00E5FF', glow: 'rgba(0, 229, 255, 0.35)', secondary: '#00B8FF' }
+                };
+                const colors = ACCENTS_MAP[s.accent];
+                if (colors) {
+                    root.style.setProperty('--primary', colors.primary);
+                    root.style.setProperty('--primary-glow', colors.glow);
+                    root.style.setProperty('--secondary', colors.secondary);
+                }
+            }
+
+            // 3. Font Size Scaling
+            if (s.fontSize) {
+                const sizes = { small: '14px', medium: '16px', large: '18px' };
+                if (sizes[s.fontSize]) {
+                    root.style.setProperty('--base-font-size', sizes[s.fontSize]);
+                    root.style.fontSize = sizes[s.fontSize];
+                }
+            }
+
+            // 4. Sidebar configuration
+            if (s.sidebar && sidebar) {
+                if (s.sidebar.collapse || s.sidebar.iconsOnly) {
+                    sidebar.classList.add('collapsed');
+                } else {
+                    sidebar.classList.remove('collapsed');
+                }
+                if (s.sidebar.animate === false) {
+                    sidebar.style.transition = 'none';
+                } else {
+                    sidebar.style.transition = '';
+                }
+            }
+
+            // 5. Dashboard widgets toggle
+            if (s.dashboardWidgets) {
+                const widgetIdMap = {
+                    weather: ['view-weather', 'weather-dashboard'],
+                    parking: ['view-parking', 'parking-grid'],
+                    crowdAnalytics: ['view-crowd', 'crowd-dashboard'],
+                    security: ['view-security', 'security-dashboard'],
+                    tickets: ['view-tickets'],
+                    liveStadium: ['twinMap', 'live-stadium-panel'],
+                    aiPrediction: ['crowdPredictions']
+                };
+                Object.keys(s.dashboardWidgets).forEach(wk => {
+                    const val = s.dashboardWidgets[wk];
+                    const ids = widgetIdMap[wk];
+                    if (ids) {
+                        ids.forEach(id => {
+                            const els = document.querySelectorAll(`#${id}, .${id}`);
+                            els.forEach(el => {
+                                if (!val) {
+                                    el.style.display = 'none';
+                                } else {
+                                    el.style.display = '';
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+
+            // 6. AI Assistant Buttons Visibility
+            if (s.ai) {
+                const val = s.ai.assistant;
+                const askAIBtns = document.querySelectorAll('.btn-ai, #aiCopilotContainer, #aiCopilotOverlay');
+                askAIBtns.forEach(el => {
+                    el.style.display = val ? '' : 'none';
+                });
+                
+                const voiceVal = s.ai.voiceCommands;
+                const voiceBtn = document.getElementById('aiVoiceBtn');
+                if (voiceBtn) {
+                    voiceBtn.style.display = voiceVal ? '' : 'none';
+                }
+
+                const chatSugVal = s.ai.chatSuggestions;
+                const suggestionsWrapper = document.querySelector('.ai-suggested-prompts-wrapper');
+                if (suggestionsWrapper) {
+                    suggestionsWrapper.style.display = chatSugVal ? '' : 'none';
+                }
+            }
+
+            // 7. Accessibility High Contrast / Reduce Motion
+            if (s.accessibility) {
+                if (s.accessibility.highContrast) root.classList.add('high-contrast');
+                else root.classList.remove('high-contrast');
+
+                if (s.accessibility.reduceMotion) root.classList.add('reduce-motion');
+                else root.classList.remove('reduce-motion');
+            }
+
+            // 8. Profile sync in navbar
+            if (s.profile) {
+                const navAvatar = document.querySelector('.avatar-container img');
+                const navName = document.querySelector('.profile-name');
+                const navRole = document.querySelector('.profile-role');
+                if (navAvatar && s.profile.photo) navAvatar.src = s.profile.photo;
+                if (navName && s.profile.name) navName.textContent = s.profile.name;
+                if (navRole && s.profile.role) navRole.textContent = s.profile.role;
+            }
+
+        } catch (e) {
+            console.error("Error applying stored settings", e);
+        }
+    }
+
+    // Run on boot
+    applySavedSettings();
+
+    // Listen for updates from React settings context
+    window.addEventListener('stadiumos-settings-changed', (e) => {
+        applySavedSettings();
     });
 
 

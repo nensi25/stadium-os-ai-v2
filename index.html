@@ -17,14 +17,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="src/styles/premium.css">
+    <link rel="stylesheet" href="src/styles/settings.css">
+    <!-- Main Script -->
+    <script type="module" src="src/script.js"></script>
+
+    <!-- React, ReactDOM & Babel for dynamic execution of React Settings Components -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0?dev",
+          "react-dom": "https://esm.sh/react-dom@18.2.0?dev",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?dev"
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/@babel/standalone@7.22.17/babel.min.js"></script>
 </head>
 
 <body class="dark-theme">
 
 
 
-   
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -45,7 +61,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" data-view="dashboard">
+                <a href="#" data-view="live" aria-label="Live Stadium">
                     <i class="fa-solid fa-tower-broadcast"></i>
                     <span>Live Stadium</span>
                 </a>
@@ -57,7 +73,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" data-view="dashboard">
+                <a href="#" data-view="predictions" aria-label="AI Predictions">
                     <i class="fa-solid fa-brain"></i>
                     <span>AI Predictions</span>
                 </a>
@@ -130,29 +146,41 @@
                     <button class="icon-btn" title="Export Report"><i class="fa-solid fa-file-export"></i></button>
                     <button class="icon-btn" title="Refresh Dashboard"><i class="fa-solid fa-rotate-right"></i></button>
                     <button class="icon-btn" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
-                    <button class="icon-btn" title="Settings"><i class="fa-solid fa-gear"></i></button>
+                    <button class="icon-btn" title="Settings" data-view="settings"><i
+                            class="fa-solid fa-gear"></i></button>
                 </div>
 
                 <button class="btn-ai pulse-glow">
                     🤖 Ask AI
                 </button>
 
-                <div class="notification-wrapper">
-                    <button class="icon-btn notification-btn shake-on-new" id="notificationBtn">
-                        <i class="fa-solid fa-bell"></i>
-                        <span class="badge" id="notifBadge">5</span>
+                <div class="notification-wrapper" role="region" aria-label="Notifications">
+                    <button class="icon-btn notification-btn shake-on-new" id="notificationBtn"
+                        aria-label="Open notifications" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                        <span class="badge" id="notifBadge" aria-label="5 unread notifications">5</span>
                     </button>
                     <!-- Notification Popup -->
-                    <div class="notification-popup glass-card hidden" id="notificationPopup">
-                        <h4>Recent Alerts</h4>
-                        <ul id="notificationList">
-                            <li><i class="fa-solid fa-triangle-exclamation text-warning"></i> Gate 12 Crowd High</li>
-                            <li><i class="fa-solid fa-square-parking text-warning"></i> Parking A Full</li>
-                            <li><i class="fa-solid fa-video-slash text-danger"></i> Camera 04 Offline</li>
-                            <li><i class="fa-solid fa-cloud text-info"></i> Weather Updated</li>
+                    <div class="notification-popup glass-card hidden" id="notificationPopup" role="dialog"
+                        aria-label="Notifications panel">
+                        <div class="notif-header">
+                            <h4><i class="fa-solid fa-bell text-primary" aria-hidden="true"></i> Notifications</h4>
+                            <div class="notif-actions">
+                                <button class="notif-action-btn" id="markAllReadBtn" aria-label="Mark all as read">Mark
+                                    all read</button>
+                                <button class="notif-action-btn" id="clearAllNotifBtn"
+                                    aria-label="Clear all notifications">Clear all</button>
+                            </div>
+                        </div>
+                        <ul id="notificationList" role="list" aria-label="Notification list">
+                            <!-- Populated by NotificationManager -->
                         </ul>
+                        <div class="notif-footer">
+                            <a href="#" data-view="security" aria-label="View all alerts">View all alerts</a>
+                        </div>
                     </div>
                 </div>
+
 
                 <div class="datetime-digital">
                     <div class="date-part">
@@ -179,7 +207,7 @@
                     <div class="profile-dropdown glass-card hidden" id="profileDropdown">
                         <ul>
                             <li><a href="#"><i class="fa-solid fa-user"></i> Profile</a></li>
-                            <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li><a href="#" data-view="settings"><i class="fa-solid fa-gear"></i> Settings</a></li>
                             <li class="nav-divider"></li>
                             <li><a href="#" class="text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     Logout</a></li>
@@ -711,8 +739,338 @@
 
         </div> <!-- /.dashboard-container -->
 
+        <!-- ======================================================
+             LIVE STADIUM VIEW
+        ====================================================== -->
+        <div id="view-live" class="view-section hidden" role="main" aria-label="Live Stadium">
+
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h1><i class="fa-solid fa-tower-broadcast text-primary" aria-hidden="true"></i> Live Stadium</h1>
+                    <nav class="breadcrumb" aria-label="Breadcrumb">
+                        <span>StadiumOS</span>
+                        <span class="bc-sep">›</span>
+                        <span class="bc-current">Live Stadium</span>
+                    </nav>
+                </div>
+                <div class="page-header-right">
+                    <span class="live-indicator" aria-label="Live feed active"><span class="dot"
+                            aria-hidden="true"></span> LIVE FEED</span>
+                    <button class="btn btn-secondary ripple-btn" id="liveRefreshBtn" aria-label="Refresh live feeds">
+                        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Refresh
+                    </button>
+                    <button class="btn btn-primary ripple-btn" id="exportLiveBtn" aria-label="Export live report">
+                        <i class="fa-solid fa-file-export" aria-hidden="true"></i> Export Report
+                    </button>
+                </div>
+            </div>
+
+            <div style="padding: 24px;">
+
+                <!-- Emergency Alert Banner (shown conditionally) -->
+                <div class="emergency-banner" id="liveBanner" style="display:none;" role="alert" aria-live="assertive">
+                    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                    <div class="banner-text">
+                        <strong>EMERGENCY ALERT — Gate 12</strong>
+                        <span>High crowd density detected. Security dispatched. AI recommends opening Gate 14.</span>
+                    </div>
+                    <button class="btn btn-secondary" style="margin-left:auto;padding:6px 14px;font-size:12px;"
+                        onclick="this.parentElement.style.display='none'" aria-label="Dismiss alert">Dismiss</button>
+                </div>
+
+                <!-- Live Stadium KPI Row -->
+                <section class="kpi-grid" aria-label="Live Stadium Statistics" style="margin-bottom:24px;">
+                    <div class="kpi-card glass-card fade-in delay-1">
+                        <div class="kpi-icon text-success"><i class="fa-solid fa-video" aria-hidden="true"></i></div>
+                        <div class="kpi-info">
+                            <h3>Cameras Online</h3>
+                            <div class="kpi-value"><span id="lsCamOnline">126</span>/128</div>
+                            <span class="badge-status status-ok">OPERATIONAL</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-card fade-in delay-2">
+                        <div class="kpi-icon text-primary"><i class="fa-solid fa-door-open" aria-hidden="true"></i>
+                        </div>
+                        <div class="kpi-info">
+                            <h3>Gates Open</h3>
+                            <div class="kpi-value"><span id="lsGatesOpen">22</span>/24</div>
+                            <span class="badge-status status-ok">NORMAL</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-card fade-in delay-3">
+                        <div class="kpi-icon text-warning"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+                        <div class="kpi-info">
+                            <h3>Crowd Density</h3>
+                            <div class="kpi-value"><span id="lsCrowdDensity">93</span>%</div>
+                            <span class="badge-status status-warn">HIGH</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass-card fade-in delay-4">
+                        <div class="kpi-icon text-danger"><i class="fa-solid fa-triangle-exclamation"
+                                aria-hidden="true"></i></div>
+                        <div class="kpi-info">
+                            <h3>Active Alerts</h3>
+                            <div class="kpi-value text-danger"><span id="lsActiveAlerts">3</span></div>
+                            <span class="badge-status status-danger">REQUIRES ACTION</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Filter Bar -->
+                <div class="filter-bar" role="search" aria-label="Camera search and filter">
+                    <div class="filter-input">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        <input type="text" id="cameraSearch" placeholder="Search cameras by name or location..."
+                            aria-label="Search cameras">
+                    </div>
+                    <select class="cyber-select" id="cameraStatusFilter" aria-label="Filter by camera status">
+                        <option value="all">All Status</option>
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                        <option value="warning">Warning</option>
+                    </select>
+                    <select class="cyber-select" id="cameraZoneFilter" aria-label="Filter by zone">
+                        <option value="all">All Zones</option>
+                        <option value="north">North Stand</option>
+                        <option value="south">South Stand</option>
+                        <option value="east">East Stand</option>
+                        <option value="west">West Stand</option>
+                        <option value="vip">VIP</option>
+                        <option value="parking">Parking</option>
+                    </select>
+                </div>
+
+                <div class="main-grid" style="align-items:flex-start;">
+                    <div class="grid-left" style="flex:2;">
+                        <!-- Camera Grid -->
+                        <section class="glass-card" aria-label="Live Camera Feeds">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-video text-primary" aria-hidden="true"></i> Live Camera Feeds
+                                </h2>
+                                <div style="display:flex;gap:8px;align-items:center;">
+                                    <span class="badge-status status-ok">AI SCANNING</span>
+                                </div>
+                            </div>
+                            <div class="camera-grid" id="liveCameraGrid" aria-label="Camera feed cards">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="grid-right">
+                        <!-- Gate Status -->
+                        <section class="glass-card" aria-label="Gate Status" style="margin-bottom:16px;">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-door-open text-primary" aria-hidden="true"></i> Gate Status
+                                </h2>
+                                <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                            </div>
+                            <div class="gate-grid" id="gateStatusGrid">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+
+                        <!-- Medical Response -->
+                        <section class="glass-card" aria-label="Medical Response Team" style="margin-bottom:16px;">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-kit-medical text-danger" aria-hidden="true"></i> Medical
+                                    Response</h2>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:10px;" id="medicalResponseList">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+
+                        <!-- Traffic Status -->
+                        <section class="glass-card" aria-label="Traffic Status">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-traffic-light text-warning" aria-hidden="true"></i> Traffic
+                                    Status</h2>
+                            </div>
+                            <div id="trafficStatusList" style="display:flex;flex-direction:column;gap:8px;">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================================
+             AI PREDICTIONS VIEW
+        ====================================================== -->
+        <div id="view-predictions" class="view-section hidden" role="main" aria-label="AI Predictions">
+
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h1><i class="fa-solid fa-brain text-primary" aria-hidden="true"></i> AI Predictions</h1>
+                    <nav class="breadcrumb" aria-label="Breadcrumb">
+                        <span>StadiumOS</span>
+                        <span class="bc-sep">›</span>
+                        <span class="bc-current">AI Predictions</span>
+                    </nav>
+                </div>
+                <div class="page-header-right">
+                    <span class="badge-status status-ok" style="font-size:11px;">AI PROCESSING: LIVE</span>
+                    <button class="btn btn-secondary ripple-btn" id="refreshPredictionsBtn"
+                        aria-label="Refresh predictions">
+                        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Refresh
+                    </button>
+                    <button class="btn btn-primary ripple-btn" id="exportPredictionsBtn"
+                        aria-label="Export predictions">
+                        <i class="fa-solid fa-file-export" aria-hidden="true"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <div style="padding:24px;">
+
+                <!-- AI Confidence Banner -->
+                <div class="glass-card"
+                    style="margin-bottom:24px;background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(0,229,255,0.02));border-color:rgba(0,229,255,0.25);">
+                    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+                        <div class="confidence-ring-wrap" style="width:90px;height:90px;"
+                            aria-label="AI confidence level">
+                            <svg viewBox="0 0 80 80" style="width:100%;height:100%;transform:rotate(-90deg)">
+                                <circle cx="40" cy="40" r="34" class="ring-bg" fill="none"
+                                    stroke="rgba(255,255,255,0.06)" stroke-width="6" />
+                                <circle cx="40" cy="40" r="34" class="ring-fill" fill="none" stroke="var(--primary)"
+                                    stroke-width="6" stroke-linecap="round" id="predRingFill"
+                                    style="stroke-dasharray:0 214;transition:stroke-dashoffset 1.5s ease;" />
+                            </svg>
+                            <div class="confidence-value" id="predConfidenceVal" aria-live="polite">98.7%</div>
+                        </div>
+                        <div>
+                            <h2 style="font-size:18px;margin-bottom:4px;">AI Confidence Score</h2>
+                            <p style="color:var(--text-muted);font-size:13px;max-width:480px;">StadiumOS AI models are
+                                processing <strong style="color:var(--text-main);">127 data streams</strong> in
+                                real-time — crowd sensors, weather APIs, historical patterns, and live camera feeds — to
+                                generate high-confidence predictions.</p>
+                        </div>
+                        <div style="margin-left:auto;display:flex;gap:16px;flex-wrap:wrap;">
+                            <div style="text-align:center;">
+                                <div style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--primary);"
+                                    id="predAccuracyVal">97.9%</div>
+                                <div style="font-size:11px;color:var(--text-muted);">Prediction Accuracy</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div
+                                    style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--success);">
+                                    127</div>
+                                <div style="font-size:11px;color:var(--text-muted);">Data Streams</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div
+                                    style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--warning);">
+                                    30s</div>
+                                <div style="font-size:11px;color:var(--text-muted);">Update Interval</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="filter-bar" style="margin-bottom:20px;" role="search" aria-label="Prediction filters">
+                    <div class="filter-input">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        <input type="text" id="predSearch" placeholder="Search predictions..."
+                            aria-label="Search predictions">
+                    </div>
+                    <select class="cyber-select" id="predTypeFilter" aria-label="Filter by prediction type">
+                        <option value="all">All Categories</option>
+                        <option value="crowd">Crowd</option>
+                        <option value="parking">Parking</option>
+                        <option value="weather">Weather</option>
+                        <option value="security">Security</option>
+                    </select>
+                    <select class="cyber-select" id="predTimeFilter" aria-label="Filter by time horizon">
+                        <option value="30m">Next 30 min</option>
+                        <option value="1h">Next 1 hour</option>
+                        <option value="3h">Next 3 hours</option>
+                        <option value="day">Today</option>
+                    </select>
+                </div>
+
+                <!-- Prediction Cards -->
+                <div class="prediction-cards-grid" id="predictionCardsGrid" aria-label="Prediction cards">
+                    <!-- Generated by JS -->
+                </div>
+
+                <div class="main-grid" style="margin-top:24px;align-items:flex-start;">
+                    <div class="grid-left">
+                        <!-- Prediction Trend Chart -->
+                        <section class="glass-card">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-chart-line text-primary" aria-hidden="true"></i> Attendance
+                                    Prediction Trend</h2>
+                                <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                            </div>
+                            <div style="position:relative;height:200px;margin-top:12px;">
+                                <canvas id="predTrendChart" style="width:100%;height:100%;"></canvas>
+                            </div>
+                            <div
+                                style="display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color);">
+                                <div style="text-align:center;">
+                                    <div style="font-size:16px;font-weight:700;color:var(--text-bright);">84,250</div>
+                                    <div style="font-size:11px;color:var(--text-muted);">Current</div>
+                                </div>
+                                <div style="text-align:center;">
+                                    <div style="font-size:16px;font-weight:700;color:var(--primary);">89,650</div>
+                                    <div style="font-size:11px;color:var(--text-muted);">Predicted Peak</div>
+                                </div>
+                                <div style="text-align:center;">
+                                    <div style="font-size:16px;font-weight:700;color:var(--success);">90,000</div>
+                                    <div style="font-size:11px;color:var(--text-muted);">Capacity</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="grid-right">
+                        <!-- AI Recommendations -->
+                        <section class="glass-card">
+                            <div class="panel-header">
+                                <h2><i class="fa-solid fa-lightbulb text-warning" aria-hidden="true"></i> AI
+                                    Recommendations</h2>
+                                <button class="btn btn-secondary ripple-btn" style="padding:6px 14px;font-size:12px;"
+                                    id="applyAllRecoBtn" aria-label="Apply all recommendations">Apply All</button>
+                            </div>
+                            <div class="recommendation-list" id="aiRecoListFull">
+                                <!-- Generated by JS -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Prediction History Table -->
+                <section class="glass-card" style="margin-top:24px;" aria-label="Prediction history">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-clock-rotate-left text-primary" aria-hidden="true"></i> Prediction
+                            History</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="styled-table" aria-label="Prediction history table">
+                            <thead>
+                                <tr>
+                                    <th data-sort="time">Time</th>
+                                    <th data-sort="type">Type</th>
+                                    <th data-sort="prediction">Prediction</th>
+                                    <th data-sort="actual">Actual</th>
+                                    <th data-sort="accuracy">Accuracy</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="predHistoryTable">
+                                <!-- Generated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+
         <!-- Parking View -->
         <div id="view-parking" class="view-section hidden">
+
             <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem;">
                 <div class="hero-content">
                     <h1>SMART PARKING HUB</h1>
@@ -1109,6 +1467,18 @@
             </div>
         </div>
 
+        <!-- Settings View (React Root Container) -->
+        <div id="view-settings" class="view-section hidden">
+            <section class="hero-section glass-card slide-up" style="margin-bottom: 2rem;">
+                <div class="hero-content">
+                    <h1>SYSTEM CONTROL SETTINGS</h1>
+                    <p>Configure autonomous predictions, themes, notifications, and security protocols</p>
+                </div>
+            </section>
+
+            <div id="settings-root"></div>
+        </div>
+
         <!-- Confirmation Modal -->
         <div class="modal-overlay hidden" id="emergModalOverlay">
             <div class="confirm-modal glass-card">
@@ -1322,6 +1692,9 @@
 
     <!-- Custom Script -->
     <script src="script.js"></script>
+    <!-- React Entry Script -->
+    <script type="text/babel" data-type="module" src="src/index.jsx"></script>
+
 </body>
 
 </html>
