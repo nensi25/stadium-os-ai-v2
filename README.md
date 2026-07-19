@@ -492,25 +492,25 @@ https://github.com/nensi25/stadium-os-ai-v2
 
 ## 🏠 Dashboard Overview
 
-![Dashboard](image1.png)
+![Dashboard](image.png)
 
 ---
 
 ## 👥 Crowd Intelligence
 
-![Crowd](image2.png)
+![Crowd](image2.jpeg)
 
 ---
 
 ## 🛡 Security Center
 
-![Security](image3.png)
+![Security](image3.jpeg)
 
 ---
 
 ## 🚗 Smart Parking
 
-![Parking](image4.png)
+![Parking](image4.jpeg)
 
 ---
 
